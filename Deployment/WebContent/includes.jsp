@@ -18,7 +18,7 @@
 	<%@ include file="variables.jsp" %>
 	<%=name %>
 	<br>
-	<!-- 실행시(runtime)에 어떤 include 할 파일 결정될때는 동적 include -->
+	<!-- 실행시(runtime)에 어떤파일을 include 할지 결정할때는 동적 include를 사용 -->
 	<!-- 실행시 id가 있을 경우 login.html, 없을경우 fail.html페이지를 보여줌-->
 	<% String id = request.getParameter("id"); 
 	if(id == null){ %>
