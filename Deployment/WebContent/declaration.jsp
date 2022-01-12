@@ -1,8 +1,5 @@
-<%@page import="gui.TextOutput"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!-- import가 필요한 경우 -->
-<%@ page import="java.util.Date" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,10 +7,13 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>JSP 기본 페이지</h1>
-	<%= new Date() %>
-	<br>
-	<%= new TextOutput().getInfo() %>
-	
+<%! 
+/* 메서드 만들기 */
+private String getInfo(){
+	return "디클레이션 태그 메서드 리턴";
+}
+%>
+<!-- 메서드 호출 -->
+<%= getInfo() %>
 </body>
 </html>

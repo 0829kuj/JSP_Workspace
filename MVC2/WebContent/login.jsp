@@ -1,8 +1,5 @@
-<%@page import="gui.TextOutput"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!-- import가 필요한 경우 -->
-<%@ page import="java.util.Date" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,10 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>JSP 기본 페이지</h1>
-	<%= new Date() %>
-	<br>
-	<%= new TextOutput().getInfo() %>
-	
+	<h1>로그인 페이지</h1>
 </body>
 </html>
