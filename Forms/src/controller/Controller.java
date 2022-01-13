@@ -14,22 +14,21 @@ public class Controller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		response.getWriter().append("Served at: ").append(request.getContextPath());
 		PrintWriter out = response.getWriter();
 		String user = request.getParameter("user");
 		
 		out.println("<html>");
-		out.println("user http get: " + user);
+		out.println("user1 http get: " + user);
 		out.println("<html>");
 		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
-		String user = request.getParameter("user");
+		String email = request.getParameter("email");
 		
 		out.println("<html>");
-		out.println("user http post: " + user);
+		out.println("Email http post: " + email);
 		out.println("<html>");
 	}
 
