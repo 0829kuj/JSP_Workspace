@@ -2,9 +2,12 @@
 create database if not exists webshop default character set utf8mb4 collate utf8mb4_unicode_ci;
 use webshop;	# webshop을 선택
 # user테이블이 있으면 삭제 후 새로만듦
-drop table if exists user;
-create table user (
+drop table if exists users;
+create table users (
 	id int primary key auto_increment,		# 유저 아이디
     email varchar(50),						# 이메일
     password varchar(50)					# 비밀번호
 );
+
+insert into users(email, password)
+value ('0829kuj@naver.com', 'abcd1234');
