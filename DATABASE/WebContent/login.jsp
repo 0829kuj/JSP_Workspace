@@ -89,7 +89,7 @@
 
   <body>
   <!-- 로그인을 할땐 보안상 보통 post방식으로 요청 -->
-    <form action="<%= request.getContextPath() %>/Controller?action=dologin" method="post" class="loginForm">
+    <form action="<%= request.getContextPath() %>/Controller" method="post" class="loginForm">
       <input type="hidden" name="action" value="dologin" >
       <h2>Login</h2>
       <div class="emailForm">

@@ -1,0 +1,38 @@
+body, html { 
+	height: 100%
+}
+
+.headerWrapper {
+	margin: -5px -5px 0 -5px;
+	background-color: red;
+	text-align: center;
+}
+
+.header {
+	position: relative;
+	margin: 0 auto;
+	display: block;
+	height: 40px;
+	width: 100%;
+	text-align: left;
+}
+
+.content {  
+	display: flex;
+	justify-content: center;
+	margin: 0 auto;
+	text-align: center;
+}
+
+#footer {
+	position: relative;
+	top: 200px;
+	width: 90%;
+	background-color: white;
+	text-align: left;
+	border-top: 1px solid gray;
+	height: 30px;
+	margin-left: 5%;
+	font-size: 11px;
+	color: gray;
+}

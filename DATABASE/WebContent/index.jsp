@@ -12,7 +12,12 @@
 	<!-- 여기서 request.getContextPath()는 /DATABASE 를 의미함. 만약 프로젝트폴더의 이름이 바뀌도러도 일일히 수정하지 않아도 되도록 한것. -->
 	<!-- 질문. 여기서 get post중 왜 get방식으로 넘어가지? -->
 	<a href="<%= request.getContextPath() %>/Controller?action=login">
-		클릭해서 로그인
+		로그인
+	</a>
+</p>
+<p>
+	<a href="<%= request.getContextPath() %>/Controller?action=createaccount">
+		가입하기
 	</a>
 </p>
 </body>

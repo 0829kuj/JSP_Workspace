@@ -19,9 +19,9 @@
 </style>
 </head>
 <body>
-	<div id= "message">
-		<p>로그인 되었습니다.</p>
-		<p><%= request.getAttribute("email") %>></p>
-	</div>
+<div id="message">
+	<p> 로그인 되었습니다. </p>
+	<p> <%= request.getAttribute("email") %></p>
+</div>
 </body>
 </html>
