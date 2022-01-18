@@ -14,9 +14,9 @@
 
 <!-- JSTL로 bean객체 사용 -->
 <!-- bean객체 생성 -->
-<!--  jsp:useBean id="test" class="beans.TestBean"/  -->
 <!-- ""안에 달러기호{값}을 사용하면 ""내부에 변수를 사용할 수 있음  객체명.메서드명 으로 호출-->
-<p> getInfo메서드 : <c:out value="${test.info}" />
+<jsp:useBean id="test" class="beans.TestBean" />
+<p> getInfo메소드 : <c:out value="${test.info}" />
 
 <!-- parameter 가져오기 param.속성이름 -->
 <!-- parameter중 name속성의 값을 출력함(테스트는 url창에 ?name=값 으로 확인) -->
