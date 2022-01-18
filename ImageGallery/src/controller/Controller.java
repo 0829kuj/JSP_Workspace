@@ -16,7 +16,7 @@ public class Controller extends HttpServlet {
 	
 	private Map<String, String> actionMap = new HashMap<>();
 	public Controller() {
-		// 컨트롤러 생성자 (처음 시작할 때 한번 실행) key-value로 한묶음
+		// 컨트롤러 생성자 (처음 시작할 때 한번 실행). key-value로 한묶음
 		actionMap.put("home", "/home.jsp");
 		actionMap.put("image", "/image.jsp");
 	}
