@@ -28,7 +28,6 @@
 	<c:if test="${row.index % tablewidth == 0}"><tr></c:if>
 	<c:set var="picName" scope="page" value="${image.stem}.${image.image_extension}"/>
 	<td>
-		<c:url value="/gallery?action=image&image=${image.id}" />
 		<a href="<c:url value="/gallery?action=image&image=${image.id}" />">
 			<img src="${pageContext.request.contextPath}/pics/${picName}">
 		</a>

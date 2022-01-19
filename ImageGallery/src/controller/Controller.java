@@ -16,10 +16,11 @@ public class Controller extends HttpServlet {
 	
 	private Map<String, String> actionMap = new HashMap<>();
 	public Controller() {
-		// 컨트롤러 생성자 (처음 시작할 때 한번 실행). key-value로 한묶음
+	// 컨트롤러 생성자 (처음 시작할 때 한번 실행). key-value로 한묶음
 		actionMap.put("home", "/home.jsp");
 		actionMap.put("image", "/image.jsp");
 		actionMap.put("rate", "/image.jsp");
+	// 여기서 넣어준 key값으로 아래 doGet메서드가 실행되었을 때 28라인에서 key값이 action에 저장되고, 그 action을 통해 33라인에서 value값을 조회해 해당 주소로 forward해주는거임
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

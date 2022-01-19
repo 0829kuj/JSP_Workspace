@@ -75,7 +75,7 @@ public class Controller extends HttpServlet {
 			e.printStackTrace();
 			return;
 		} 
-//		out.println("DB연결 테스트 완료!");
+//		out.println("DB연결 테스트 완료!"); // 테스트가 완료되었으므로 주석처리
 		Account account = new Account(conn);	// Account클래스 생성 => DB연결을 Account클래스에 줌
 		
 		if(action.equals("dologin")) {
