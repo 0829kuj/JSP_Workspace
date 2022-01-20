@@ -6,10 +6,9 @@ public class User {
 	private String userName;
 	private String password;
 	
-	// 기본생성성자는 java bean용도로 필요
-	public User() {	}
+	public User() {	}	// 기본생성성자는 java bean용으로 필요
 	
-	// 이 생성자는 UserController에서 User객체를 사용할 때 4개의 매개변수가 모두 필요하므로 미리 만들어
+	// 이 User생성자는 UserController에서 User객체를 사용할 때 4개의 매개변수가 모두 필요하므로 미리 만들어둠
 	public User(String firstName, String lastName, String usertName, String password) {
 		super();
 		this.firstName = firstName;
