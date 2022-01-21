@@ -31,7 +31,7 @@ public class LoginController extends HttpServlet {
 		session.setAttribute("message", "");
 		
 		// 로그인 페이지로 이동
-		response.sendRedirect("/login/login.jsp"); 	// login폴더 안의 login.jsp로 이동. forward가 아니라 단순히 페이지만 이동함 
+		response.sendRedirect("login/login.jsp"); 	// login폴더 안의 login.jsp로 이동. forward가 아니라 단순히 페이지만 이동함 
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

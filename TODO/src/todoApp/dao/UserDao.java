@@ -31,6 +31,6 @@ public class UserDao {
 			e.printStackTrace();
 		}
 		
-		return 1;
+		return result;
 	}
 }
