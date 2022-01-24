@@ -25,12 +25,8 @@ public class LoginController extends HttpServlet {
 		loginDao = new LoginDao();
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		session.setAttribute("user", "");	// get방식으로 넘어왔을땐 user창과 message창을 비워줌
-		session.setAttribute("message", "");
-		
-		// 로그인 페이지로 이동
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
+		// 로그인 페이지로 이동. send는 페이지 새로열기이므로 모든 입력데이터가 사라짐
 		response.sendRedirect("login/login.jsp"); 	// login폴더 안의 login.jsp로 이동. forward가 아니라 단순히 페이지만 이동함 
 	}
 
@@ -47,14 +43,18 @@ public class LoginController extends HttpServlet {
 		// 로그인이 성공했는지 체크
 		if (loginDao.validate(loginBean)) {	// true면 계정있음. 로그인됨 => 할일 페이지로 forward
 			System.out.println("로그인 성공~!");
+			HttpSession session = request.getSession();
+			session.setAttribute("username", username);	// 로그인 한 유저네임을 세션에 저장
+			
 			RequestDispatcher dispatcher = request.getRequestDispatcher("todo/todo-list.jsp");
 			dispatcher.forward(request, response);
-		}else { // false면 계정없음. 로그인 실패 => 
+		}else { // false면 계정없음. 로그인 실패
 			System.out.println("로그인 실패...");
-			HttpSession session = request.getSession();
-			session.setAttribute("user", username);		// username은 session에 저장해 다시 보내줌 (비밀번호만 틀렸을때 재입력이 편하게)
-			session.setAttribute("message", "Login Fail 로그인에 실패했습니다...");
-			response.sendRedirect("login/login.jsp");	// send는 페이지 새로열기이므로 모든 입력데이터가 사라짐
+			request.setAttribute("user", username);		// username은 session에 저장해 다시 보내줌 (비밀번호만 틀렸을때 재입력이 편하게)
+			request.setAttribute("message", "Login Fail 로그인에 실패했습니다...");
+			// 로그인 실패 내용을 forward로 다시 로그인 페이지에 보여주기(forward를 안해주면 리퀘스트는 새로고침할때 사라짐)
+			RequestDispatcher dispatcher = request.getRequestDispatcher("login/login.jsp");
+			dispatcher.forward(request, response);
 		}
 	}
 

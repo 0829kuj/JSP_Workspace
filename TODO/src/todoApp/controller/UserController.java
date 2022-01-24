@@ -29,7 +29,6 @@ public class UserController extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -46,8 +45,13 @@ public class UserController extends HttpServlet {
 		
 		int result = userDao.registerUser(user);	// 1이 리턴되면 성공, 0이 리턴되면 에러
 		if(result == 1) {
-			System.out.println("회원등록 완료!");
+			System.out.println("회원등록 완료!");		// 콘솔에 출력
+			request.setAttribute("MESSAGE", "회원등록 완료!"); // 웹페이지에서도 볼 수 있게 리퀘스트에 Attribure로 저장
+		} else {
+			System.out.println("회원등록 실패...");
+			request.setAttribute("MESSAGE", "회원등록 실패...");
 		}
+		
 		// 화면을 보여주기 (register.html 페이지를 보여주기)
 //		request.getRequestDispatcher("register.jsp").forward(request, response);  한 줄로 작성했을때
 		RequestDispatcher dispatcher = request.getRequestDispatcher("register/Register.jsp");

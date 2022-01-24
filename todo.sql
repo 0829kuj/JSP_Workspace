@@ -39,3 +39,7 @@ DElETE frOm useRS WHErE ID = 1;
 INSERT INTO todos(title, username, description, target_date, is_done) VALUES(?,?,?,?,?);
 SELECT id, title, username, description, target_date, is_done FROM todos WHERE id = 1;
 UPDATE () from todos where id =1;
+
+SELECT * FROM demo.todos;
+INSERT INTO todos(title, username, target_date, is_done, description)
+VALUES("할일3", "son", 2022-1-24, 0, "세번째 할일 설명");

@@ -13,6 +13,15 @@ public class Todo {
 	
 	protected Todo() {}		// java 기본 bean
 
+	public Todo(String title, String username, String description, LocalDate targetDate, boolean status) {
+		super();
+		this.title = title;
+		this.username = username;
+		this.description = description;
+		this.targetDate = targetDate;
+		this.status = status;
+	}
+	
 	public Todo(Long id, String title, String username, String description, LocalDate targetDate, boolean status) {
 		super();
 		this.id = id;
@@ -22,7 +31,7 @@ public class Todo {
 		this.targetDate = targetDate;
 		this.status = status;
 	}
-	
+
 	// 위의 메서드가 bean이므로 get/set메서드 필요
 	public Long getId() {
 		return id;
