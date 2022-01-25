@@ -50,7 +50,7 @@ public class LoginController extends HttpServlet {
 			dispatcher.forward(request, response);
 		}else { // false면 계정없음. 로그인 실패
 			System.out.println("로그인 실패...");
-			request.setAttribute("user", username);		// username은 session에 저장해 다시 보내줌 (비밀번호만 틀렸을때 재입력이 편하게)
+			request.setAttribute("user", username);		// username은 request에 저장해 다시 보내줌 (비밀번호만 틀렸을때 재입력이 편하게)
 			request.setAttribute("message", "Login Fail 로그인에 실패했습니다...");
 			// 로그인 실패 내용을 forward로 다시 로그인 페이지에 보여주기(forward를 안해주면 리퀘스트는 새로고침할때 사라짐)
 			RequestDispatcher dispatcher = request.getRequestDispatcher("login/login.jsp");

@@ -47,7 +47,7 @@ public class TodoController extends HttpServlet {
 		case "delete":
 			deleteTodo(request, response);
 			break;
-		case "edit":
+		case "edit":	// 수정form을 보여줌
 			showEditForm(request, response);
 			break;
 		case "update":
@@ -56,7 +56,9 @@ public class TodoController extends HttpServlet {
 		case "list":	// localhost:8090/TODO/todos/list
 			listTodo(request, response);
 			break;
-		default:	// 요청 주소가 기본(/)이거나 잘못되었을 경우 로그인 페이지로 이동
+		default:	// 요청 주소가 기본(/)이거나 잘못되었을 경우, action이 없을때 로그인 페이지로 이동. 로그아웃시에도 여기로 오게된다.
+			HttpSession session = request.getSession();
+			session.invalidate();	// session에 저장된 로그인 정보를 전체삭제
 			RequestDispatcher dispatcher = request.getRequestDispatcher("login/login.jsp");
 			dispatcher.forward(request, response);
 			break;
@@ -89,9 +91,11 @@ public class TodoController extends HttpServlet {
 		
 	}
 
-	private void deleteTodo(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
-		
+	private void deleteTodo(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		// 삭제기능은 js를 통해 한번 확인작업을 거치는데 자바스크립트가 먼저 동작하기때문에 confirm창에서 확인을 눌러야 여기까지넘어오게 된다
+		Long id = Long.parseLong(request.getParameter("id"));	// id를 받음
+		todoDAO.deleteTodo(id);
+		response.sendRedirect("todos?action=list");	// 삭제 후 다시 todo-list.jsp페이지로 돌아감
 	}
 
 	private void showEditForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -104,9 +108,22 @@ public class TodoController extends HttpServlet {
 		
 	}
 
-	private void updateTodo(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
+	private void updateTodo(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		request.setCharacterEncoding("utf-8");
 		
+		HttpSession session = request.getSession();
+		// 업데이트 시에는 새로입력과 달리 id가 입력됨
+		Long id = Long.parseLong(request.getParameter("id"));
+		String title = request.getParameter("title");
+		String username = (String)session.getAttribute("username");
+		String description = request.getParameter("description");
+		LocalDate targetDate = LocalDate.parse(request.getParameter("targetDate"));
+		boolean isDone = Boolean.valueOf(request.getParameter("isDone"));
+		
+		Todo oldTodo = new Todo(id, title, username, description, targetDate, isDone);	// 우변의 속성들은 바로위에서 저장해둔 변수들임
+		todoDAO.updateTodo(oldTodo);
+		
+		response.sendRedirect("todos?action=list"); // 할 일을 수정한 후 todo-list.jsp페이지로 이동
 	}
 
 	private void listTodo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
