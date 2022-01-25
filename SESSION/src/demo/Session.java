@@ -22,7 +22,6 @@ public class Session extends HttpServlet {
 			// cart클래스 객체 생성
 			cart = new Cart();	
 		}
-		
 		cart.setTotalItems(7);
 		
 		// 세션(서버)에 cart를 저장
