@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Form1</title>
 </head>
 <body>
 <!-- action에 설정된 주소로 form의 입력창에 입력된 데이터와 함께 요청됨 -->
