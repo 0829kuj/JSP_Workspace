@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>AJAX 연습4_댓글달기</title>
+    <style>
+      div.box {
+        margin: 2px;
+        border: 1px solid pink;
+        padding: 10px;
+        background-color: lemonchiffon;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>댓글달기 폼</h1>
+    <form name="commentform">
+      <div>댓글 입력:</div>
+      <textarea name="comment" rows="8" cols="50" required placeholder="댓글을 입력해주세요" ></textarea><br>
+      <div>이메일 주소: </div>
+	  <input type="email" name="email" placeholder="이메일 입력" /><br /><br />
+      <input type="button" onclick="sendServer()" value="댓글 달기" />
+    </form>
+    <div id="output"></div>
+
+    <script>
+      const input = document.querySelector('textarea'); // textarea는 하나이므로 바로 지정
+      const inputemail = document.querySelector('input[type="email"]'); // 다수의 input태그 중 타입이 email인 태그만 선택
+      const output = document.getElementById('output');
+      const request = new XMLHttpRequest(); // ajax request객체 생성
+
+      function sendServer() {
+        // 버튼을 누르면 실행되는 함수
+        let comment = input.value; // 입력한 댓글을 comment에 저장
+        let email = inputemail.value; // 입력한 email을 저장
+        let url = 'comment.jsp?comment=' + comment + '&email=' + email; // 요청할 jsp페이지 주소에 comment와 email을 전달
+        request.open('GET', url, true);
+        request.send();
+        request.onreadystatechange = getInfo;
+      }
+      // 함수를 따로 정의한 후 그 함수를 호출하는식으로 작성함
+      function getInfo() {
+        if (request.readyState == 4 && request.status == 200) {
+          let comments = request.responseText; // 요청한 결과 받기
+          output.innerHTML = comments;
+        }
+      }
+    </script>
+  </body>
+</html>
