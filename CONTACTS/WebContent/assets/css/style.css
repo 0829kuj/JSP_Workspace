@@ -1,0 +1,5 @@
+@charset "UTF-8";
+table tbody td {
+  word-break: keep-all !important; /* 단어를 붙여서 표시. !important 는 우선순위 최상위로 적용해주는 키워드. 부트스트랩보다 우선순위를 갖기위해 추가함. */
+  vertical-align: middle !important; /* 테이블 안의 td의 내용을 y축 중앙정렬 */
+}
