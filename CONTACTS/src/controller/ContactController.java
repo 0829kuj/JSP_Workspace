@@ -15,6 +15,7 @@ import javax.sql.DataSource;
 
 import dao.ContactDao;
 import model.Contact;
+import utills.Json;
 
 @WebServlet("/contact")
 public class ContactController extends HttpServlet {
@@ -69,23 +70,58 @@ public class ContactController extends HttpServlet {
 		}
 	}
 
-	private void save(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
+	private void save(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// 모달창에서 새 연락처를 입력받아 저장하는 작업
+		Contact contact = new Contact();
+		
+		contact.setName(request.getParameter("name"));
+		contact.setEmail(request.getParameter("email"));
+		contact.setPhone(request.getParameter("phone"));
+		
+		boolean isSaved = contactDao.save(contact);		// ture이면 저장성공, false이면 실패
+		
+		if(isSaved) {
+			System.out.println("입력 완료");
+			new Json(response).sendMessage(true, "연락처 입력됨");	// ajax로 결과를 받기 위해 추가함
+		}
+//		list(request, response);	// 다시 리스트화면 출력 (ajax를 사용하지 않을때 사용)
+		
 
 	}
 
 	private void edit(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
+		int id = Integer.parseInt(request.getParameter("id"));	// 문자열id를 int변환
+		
+		Contact contact = contactDao.find(id);	// id로 연락처 객체 찾기
+		if(contact != null) {
+			System.out.println("찾기 완료");
+			new Json(response).sendContact(contact);	// 연락처와 상태를 json으로 변환해 출력
+		}
 
 	}
 
 	private void update(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
-
+		Contact contact = new Contact();
+		contact.setId(Integer.parseInt(request.getParameter("id")));
+		contact.setName(request.getParameter("name"));
+		contact.setEmail(request.getParameter("email"));
+		contact.setPhone(request.getParameter("phone"));
+		
+		boolean isUpdated = contactDao.update(contact);		// ture이면 저장성공, false이면 실패
+		
+		if(isUpdated) {
+			System.out.println("수정 완료");
+			new Json(response).sendMessage(true, "연락처 수정됨");	// ajax로 결과를 받기 위해 추가함
+		}
 	}
 
 	private void delete(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
+		int id = Integer.parseInt(request.getParameter("id"));	// id를 가져옴
+		boolean isDeleted = contactDao.delete(id);
+		if(isDeleted) {
+			System.out.println("삭제 완료");
+			new Json(response).sendMessage(true, "연락처 삭제됨");
+		}
 
 	}
 
@@ -94,12 +130,10 @@ public class ContactController extends HttpServlet {
 		request.setAttribute("contacts", contacts); 	// "contacts"에는 key값, contacts에는 실제 값이 저장됨
 		RequestDispatcher rd = request.getRequestDispatcher("contact/list.jsp");	// forward해주기 위해 RequestDispatcher로 리퀘스트를 유지해줌 
 		rd.forward(request, response);	// request에 저장된 contacts를 유지하며 list.jsp페이지로 이동
-		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		doGet(request, response);
 	}
-
 }

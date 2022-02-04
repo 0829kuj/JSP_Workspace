@@ -55,7 +55,7 @@
 	                    <span aria-hidden="true">&times;</span>
 	                </button>
 	            </div>
-	            <form autocomplete="nope">
+	            <form id="add-update" autocomplete="off" >	<!--method="post"  ajax를 사용하기위해 수정할때 삭제함-->
 		            <div class="modal-body">
 	                	<div class="form-group">
 		                    <label for="name">name</label>
@@ -74,13 +74,13 @@
 		            </div>
 		            <div class="modal-footer">
 		            	<button type="submit" class="btn btn-success btn-action">저장</button>
-		                <button type="button" class="btn btn-secondary btn-action" data-dismiss="modal">취소</button>
+		              <button type="button" class="btn btn-secondary btn-action" data-dismiss="modal">취소</button>
 		            </div>
 	            </form>
 	        </div>
 	    </div>
 	</div>
-    
+    <%-- 삭제 모달 창 --%>
     <div class="modal fade" id="modal-delete" tabindex="-1" aria-labelledby="deleteLabel" aria-hidden="true">
 	    <div class="modal-dialog">
 	        <div class="modal-content">
@@ -110,6 +110,6 @@
 	<script>
 		$('.nav-link').removeClass('active');
 		$('#m-contacts').addClass('active');
-		var path = '<%= request.getContextPath() %>';
+		const path = '<%= request.getContextPath() %>';
 	</script>
 	<script src="assets/js/contact.js"></script>
