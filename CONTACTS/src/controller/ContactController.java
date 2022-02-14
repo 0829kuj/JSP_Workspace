@@ -42,7 +42,6 @@ public class ContactController extends HttpServlet {
 //		Contact contact = new Contact(51, "markK", "markk@gmail.com", "010-1234-5678");	// 저장
 //		contactDao.save(contact);
 		
-		
 		request.setCharacterEncoding("UTF-8");
 		// 파라메터가 cmd값을 읽어서 액션으로 저장하는데 만약 값이 null이면 "list"로 대체함 (값이 있으면 그대로 저장)
 		String action = request.getParameter("cmd") != null ? request.getParameter("cmd") : "list";
