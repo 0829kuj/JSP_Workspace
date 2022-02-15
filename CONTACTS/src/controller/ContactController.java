@@ -36,7 +36,7 @@ public class ContactController extends HttpServlet {
 //		List<Contact> list = contactDao.findAll();
 //		list.forEach(contact -> System.out.println(contact.toString()));
 //		contactDao.delete(1);	// 삭제
-//		System.out.println(contactDao.find(1));	// 검색
+//		System.out.println(contactDao.find(11));	// 검색
 //		Contact contact = new Contact(1, "mark", "mark@naver.com", "010-1111-2222");	// 업데이트
 //		contactDao.update(contact);
 //		Contact contact = new Contact(51, "markK", "markk@gmail.com", "010-1234-5678");	// 저장
