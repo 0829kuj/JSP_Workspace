@@ -16,7 +16,7 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav">
             <a id="m-proListFar" class="nav-link" href="<%= request.getContextPath() %>/proListFar.jsp">농산물</a>
-            <a id="m-reviewFar" class="nav-link" href="<%= request.getContextPath() %>/reviewFar.jsp">리뷰</a>
+            <a id="m-reviewFar" class="nav-link" href="<%= request.getContextPath() %>/reviewController">리뷰</a>
           </div>
         </div>
       </nav>

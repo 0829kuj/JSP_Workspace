@@ -38,7 +38,7 @@ public class ReplyDao {
     	
     	try {
 			conn = datasource.getConnection();
-			pstmt = conn.prepareStatement("select * from reply where replyID=?");
+			pstmt = conn.prepareStatement("select * from reply where reviewID=?");
 			pstmt.setInt(1, id);
 			rs = pstmt.executeQuery();	// 리턴받은 데이터를 rs객체에 저장
 			

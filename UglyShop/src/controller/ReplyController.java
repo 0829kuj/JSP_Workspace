@@ -41,7 +41,7 @@ public class ReplyController extends HttpServlet {
 //		Reply reply1 = new Reply("farmer03","리뷰내용가나다라마바사아자차",789);
 //		replyDao.save(reply1);		// 입력 테스트용
 		
-//		System.out.println(replyDao.find(2));		// 찾기 테스트용
+		System.out.println(replyDao.find(2));		// 찾기 테스트용
 
 //		System.out.println(replyDao.delete(3));		// 삭제테스트용. true가 나와야하는데...
 		
