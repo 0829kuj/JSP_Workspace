@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
-import model.Reply;
+import beans.Reply;
 // 실제 CRUD기능을 하는 클래스
 public class ReplyDao {
 	private DataSource datasource;
@@ -18,18 +18,6 @@ public class ReplyDao {
     public  ReplyDao(DataSource datasource) {
         this.datasource = datasource;
         // 객체 생성시 커넥션 풀 datasource를 입력
-    }
-    
-    public void closeAll() {
-		try {
-			if(rs != null) rs.close();
-		    if(pstmt != null) pstmt.close();
-		    if(conn != null) conn.close();
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println("DB연결 닫는작업에서 에러발생!");
-		}
     }
     
     // 클릭한 reviewID에 해당하는 하나의 덧글을 리턴 => 우선 테스트삼아 replyID로 찾게 만들었으니 나중에 sql문 수정할것
@@ -47,7 +35,7 @@ public class ReplyDao {
 				reply = new Reply();
 				reply.setReplyID(rs.getInt("replyID"));
 				reply.setFarmID(rs.getString("farmID"));
-				reply.setReplyContant(rs.getString("replyContent"));
+				reply.setReplyContent(rs.getString("replyContent"));
 				reply.setReviewID(rs.getInt("reviewID"));
 				
 		    	System.out.println("덧글 찾기 성공");
@@ -59,7 +47,6 @@ public class ReplyDao {
 		} finally {
 			closeAll();
 		}
-    	
 		return reply;	
     }
     
@@ -70,7 +57,7 @@ public class ReplyDao {
 			conn = datasource.getConnection();
 	    	pstmt = conn.prepareStatement("insert into reply(farmID,replyContent,reviewID) values (?,?,?)");
 	    	pstmt.setString(1, reply.getFarmID());
-	    	pstmt.setString(2, reply.getReplyContant());
+	    	pstmt.setString(2, reply.getReplyContent());
 	    	pstmt.setInt(3, reply.getReviewID());
 	    	rowsaved = pstmt.executeUpdate() > 0;	// 저장된 행이 1이상이면 true
 	    	
@@ -103,4 +90,17 @@ public class ReplyDao {
 		}
 		return deleteId;
     }
+    
+    public void closeAll() {
+		try {
+			if(rs != null) rs.close();
+		    if(pstmt != null) pstmt.close();
+		    if(conn != null) conn.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("DB연결 닫는작업에서 에러발생!");
+		}
+    }
+    
 }

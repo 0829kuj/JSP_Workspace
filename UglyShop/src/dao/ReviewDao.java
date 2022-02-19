@@ -9,7 +9,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import model.Review;
+import beans.Review;
 
 public class ReviewDao {
 	private DataSource datasource;

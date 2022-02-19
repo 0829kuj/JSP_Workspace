@@ -105,3 +105,5 @@
       });
   });
 })(path);
+// (function (path) { 코드 })(path); => html이 준비되면 함수가 실행되도록.
+// $(document).ready(function () { 코드 } => 이거랑 같은 의미임. 쓰기편해서 대신쓴것.

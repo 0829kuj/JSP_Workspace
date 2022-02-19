@@ -12,10 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
+import beans.Reply;
+import beans.Review;
 import dao.ReplyDao;
 import dao.ReviewDao;
-import model.Reply;
-import model.Review;
 
 
 @WebServlet("/reviewController")
@@ -68,8 +68,10 @@ public class ReviewController extends HttpServlet {
 			case "view":		// 리뷰상세페이지에 들어갔을때 
 				view(request, response);
 				break;
-			
-			default:
+			case "list":
+				list(request, response);
+				break;
+			default:			// 이외의 값이 들어오면 리뷰리스트를 보여줌
 				list(request, response);
 				break;
 			}

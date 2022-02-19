@@ -1,9 +1,9 @@
-package model;
+package beans;
 
 public class Reply {
 	private int replyID;
 	private String farmID;
-	private String replyContant;
+	private String replyContent;
 	private int reviewID;
 	
 	public Reply() {
@@ -14,39 +14,47 @@ public class Reply {
 		// 리뷰덧글테스트툥
 		super();
 		this.farmID = farmID;
-		this.replyContant = replyContant;
+		this.replyContent = replyContant;
 		this.reviewID = reviewID;
 	}
 
+	
 
 	public int getReplyID() {
 		return replyID;
 	}
+
 	public void setReplyID(int replyID) {
 		this.replyID = replyID;
 	}
+
 	public String getFarmID() {
 		return farmID;
 	}
+
 	public void setFarmID(String farmID) {
 		this.farmID = farmID;
 	}
-	public String getReplyContant() {
-		return replyContant;
+
+	public String getReplyContent() {
+		return replyContent;
 	}
-	public void setReplyContant(String replyContant) {
-		this.replyContant = replyContant;
+
+	public void setReplyContent(String replyContent) {
+		this.replyContent = replyContent;
 	}
+
 	public int getReviewID() {
 		return reviewID;
 	}
+
 	public void setReviewID(int reviewID) {
 		this.reviewID = reviewID;
 	}
 
 	@Override
 	public String toString() {
-		return "Reply [ replyID=" + replyID + ", farmID=" + farmID + ", replyContant=" + replyContant + ", reviewID=" + reviewID + " ]";
+		return "Reply [ replyID=" + replyID + ", farmID=" + farmID + ", replyContant=" + replyContent + ", reviewID=" + reviewID + " ]";
 	}
 	
 }

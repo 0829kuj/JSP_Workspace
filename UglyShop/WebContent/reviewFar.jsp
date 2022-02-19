@@ -15,21 +15,24 @@
         </tr>
       </thead>
       <tbody>
-        <c:forEach var="review" items="${reviews}">
+        <c:forEach var="reviews" items="${reviews}">
           <tr>
-            <td><c:out value="${review.reviewID}" /></td>
+            <td><c:out value="${reviews.reviewID}" /></td>
             <td>
-              <a href="<%= request.getContextPath() %>/reviewController?cmd=view&id=<c:out value='${review.reviewID}'/>"><c:out value="${review.reviewTitle}" /></a>
+              <a href="<%= request.getContextPath() %>/reviewController?cmd=view&id=<c:out value='${reviews.reviewID}'/>"><c:out value="${reviews.reviewTitle}" /></a>
             </td>
-            <td><c:out value="${review.userID}" /></td>
-            <td><c:out value="${review.reviewDate}" /></td>
-            <td><c:out value="${review.prodID}" /></td>
+            <td><c:out value="${reviews.userID}" /></td>
+            <td><c:out value="${reviews.reviewDate}" /></td>
+            <td><c:out value="${reviews.prodID}" /></td>
           </tr>
         </c:forEach>
-        <tr></tr>
       </tbody>
     </table>
   </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"></script>
+
 <jsp:include page="/includes/footerFar.jsp" />
+<script>
+	$('.nav-link').removeClass('active'); // 모든 메뉴의 액티브클래스를 삭제
+	$('#m-reviewFar').addClass('active');	// 네브바에서 메뉴중 m-home에 active 클래스를 주는 스크립트
+</script>
