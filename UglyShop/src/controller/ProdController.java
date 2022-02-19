@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -36,16 +37,18 @@ public class ProdController extends HttpServlet {
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		List<Product> prod = prodDao.findAll();
-		prod.forEach(product -> System.out.println(product.toString()));	// 전체출력 테스트용
-		
+//		List<Product> prod = prodDao.findAll();
+//		prod.forEach(product -> System.out.println(product.toString()));	// 전체출력 테스트용
+//		System.out.println(prodDao.find(1));
 		
 		request.setCharacterEncoding("UTF-8");
 		String action = request.getParameter("cmd") != null ? request.getParameter("cmd") : "list";
 		
 		try {
 			switch (action) {
-
+			case "find":		// 상품 하나의 상세정보 출력
+				find(request, response);
+				break;
 			case "del":			// 삭제
 				delete(request, response);
 				break;
@@ -61,9 +64,25 @@ public class ProdController extends HttpServlet {
 	}
 
 
-	private void list(HttpServletRequest request, HttpServletResponse response) {
-		// 상품 전체출력
+	private void find(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// 한 상품의 상세정보를 출력
+		int id = Integer.parseInt(request.getParameter("id"));
 		
+		Product prod = prodDao.find(id);
+		
+		if(prod != null) {
+			request.setAttribute("product", prod);
+			RequestDispatcher rd = request.getRequestDispatcher("prodDetailFar.jsp");
+			rd.forward(request, response);
+		}
+		
+	}
+	private void list(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// 상품 전체출력
+		List<Product> products = prodDao.findAll();
+		request.setAttribute("products", products);
+		RequestDispatcher rd = request.getRequestDispatcher("prodListFar.jsp");
+		rd.forward(request, response);
 	}
 
 

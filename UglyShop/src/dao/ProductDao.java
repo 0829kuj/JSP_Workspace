@@ -46,7 +46,48 @@ public class ProductDao {
 		} catch (SQLException e) {
 			System.out.println("SQL에러 - product findAll");
 			e.printStackTrace();
+		} finally {
+			closeAll();
 		}
 		return list;
+	}
+	
+	public Product find(int id) {
+		Product prod = null;
+		
+		try {
+			conn = datasource.getConnection();
+			pstmt = conn.prepareStatement("select * from product where prodID=?");
+			pstmt.setInt(1, id);
+			rs = pstmt.executeQuery();
+					
+			while(rs.next()) {
+				prod = new Product();
+				prod.setProdID(rs.getInt("prodID"));
+				prod.setFarmID(rs.getString("farmID"));
+				prod.setProdName(rs.getString("prodName"));
+				prod.setProdPrice(rs.getInt("prodPrice"));
+				prod.setProdInven(rs.getInt("prodInven"));
+				prod.setProdImg(rs.getString("prodImg"));
+				prod.setProdInfo(rs.getString("prodInfo"));
+			}
+			
+		} catch (Exception e) {
+			System.out.println("SQL에러 - product find");
+			e.printStackTrace();
+		} finally {
+			closeAll();
+		}
+		return prod;
+	}
+	
+	public void closeAll() {
+		try {
+			if(rs != null) rs.close();
+			if(pstmt != null) pstmt.close();
+			if(conn != null) conn.close();
+		} catch (Exception e) {
+			System.out.println("DB연결 닫는 과정에서 에러발생");
+		}
 	}
 }
