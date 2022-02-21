@@ -3,7 +3,8 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap.min.css" />
+    <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/765/765544.png" type="image/x-icon">
     <title>농민용 못난이농산풀 판매사이트</title>
   </head>
   <body>
