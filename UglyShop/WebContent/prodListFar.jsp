@@ -5,7 +5,7 @@
 <div class="row row-cols-2">
   <c:forEach var="products" items="${products}">
     <div class="col card">
-        <a href="<%= request.getContextPath() %>/prodDetailFar.jsp">
+        <a href="<%= request.getContextPath() %>/ProdController?cmd=find&id=${products.prodID}">
           <img src="${products.prodImg}" alt="상품사진"/>
         </a>
       <div class="card-body">

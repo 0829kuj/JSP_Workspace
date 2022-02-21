@@ -82,6 +82,37 @@ public class ReviewDao {
     	return review;
     }
     
+    public List<Review> findProd(int id) {
+    	// 받아온 prodID로 같은 값을 가진 리뷰들을 모두 출력
+    	List<Review> list = new ArrayList<>();
+    	
+    	try {
+    		conn = datasource.getConnection();
+			pstmt = conn.prepareStatement("select * from review where prodID=?");
+			pstmt.setInt(1, id);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				Review review = new Review();
+				review.setReviewID(rs.getInt("reviewID"));
+				review.setUserID(rs.getString("userID"));
+				review.setReviewTitle(rs.getString("reviewTitle"));
+				review.setReviewDate(rs.getDate("reviewDate").toLocalDate());
+				review.setReviewContent(rs.getString("reviewContent"));
+				review.setProdID(rs.getInt("prodID"));
+				
+				list.add(review);
+			}
+		} catch (SQLException e) {
+			System.out.println("SQL에러 - review findProd");
+			e.printStackTrace();
+		} finally {
+			closeAll();
+		}
+    	
+		return list;
+    }
+    
 	public void closeAll() {
 		try {
 			// 생성한 순서의 역순으로 닫아줌. rs > pstmt > conn (pool로 되돌아감)
