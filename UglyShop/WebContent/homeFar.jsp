@@ -6,17 +6,23 @@
     background-color: bisque;
     display: flex;
   }
+
   img {
     width: 600px;
   }
+
   .container2 {
     margin-left: 40px;
   }
+
   .slogan {
     margin-bottom: 30px;
   }
 </style>
 <h2>메인페이지 농민ver</h2>
+
+<p>현재 접속한 유저의 아이디: <%=session.getAttribute("userID")%></p>
+<p>현재 접속한 농민의 아이디: <%=session.getAttribute("farmID")%></p>
 <div class="container">
   <img src="https://images.unsplash.com/photo-1551649001-7a2482d98d05?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80" alt="농민사진" />
   <div class="container2">

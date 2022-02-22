@@ -4,20 +4,21 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.sql.DataSource;
 
 import beans.Farmer;
 
 
-public class FarmerDAO {
+public class FarmerDao {
 	private DataSource dataSource; // jdbc/demo 커넥션 풀 연결 객체
 	private Connection conn;
 	private PreparedStatement pstmt;
 	private ResultSet rs;
 	
 	// userDAO 객체를 이용할 때 connection pool인 datasource를 사용할 수 있도록 기본생성자 생성
-	public FarmerDAO(DataSource dataSource) {
+	public FarmerDao(DataSource dataSource) {
 		this.dataSource = dataSource; 
 	}
 	
@@ -111,6 +112,16 @@ public class FarmerDAO {
 		} catch (Exception e) {
 			System.out.println("DB연결 닫을 때 에러발생");
 		}
+	}
+
+	public List<Farmer> findAllFarmer() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void deleteFarmer(String farmID) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

@@ -66,6 +66,8 @@
 			%>
 		</div>
 	</nav>
+	<p>현재 접속한 유저의 아이디: <%=session.getAttribute("userID") %></p>
+	<p>현재 접속한 농민의 아이디: <%=session.getAttribute("farmID") %></p>
 <script src="<%=request.getContextPath()%>/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

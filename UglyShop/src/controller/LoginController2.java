@@ -14,21 +14,21 @@ import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 import beans.Farmer;
-import dao.FarmerDAO;
+import dao.FarmerDao;
 
 
 @WebServlet("/farmerController")
 public class LoginController2 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private FarmerDAO farmerDao;
+	private FarmerDao farmerDao;
 
 	@Resource(name = "jdbc/shop")
 	private DataSource dataSource;
 
 	public void init() throws ServletException {
 		super.init();
-		farmerDao = new FarmerDAO(dataSource);
+		farmerDao = new FarmerDao(dataSource);
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)

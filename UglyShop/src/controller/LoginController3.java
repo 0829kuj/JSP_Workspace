@@ -14,21 +14,21 @@ import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 import beans.Manager;
-import dao.ManagerDAO;
+import dao.ManagerDao;
 
 
 @WebServlet("/managerController")
 public class LoginController3 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private ManagerDAO managerDao;
+	private ManagerDao managerDao;
 
 	@Resource(name = "jdbc/shop")
 	private DataSource dataSource;
 
 	public void init() throws ServletException {
 		super.init();
-		managerDao = new ManagerDAO(dataSource);
+		managerDao = new ManagerDao(dataSource);
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)

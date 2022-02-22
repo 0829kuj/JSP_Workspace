@@ -4,19 +4,20 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.sql.DataSource;
 
 import beans.User;
 
-public class UserDAO {
+public class UserDao {
 	private DataSource dataSource; // jdbc/demo 커넥션 풀 연결 객체
 	private Connection conn;
 	private PreparedStatement pstmt;
 	private ResultSet rs;
 	
 	// userDAO 객체를 이용할 때 connection pool인 datasource를 사용할 수 있도록 기본생성자 생성
-	public UserDAO(DataSource dataSource) {
+	public UserDao(DataSource dataSource) {
 		this.dataSource = dataSource; 
 	}
 	
@@ -110,6 +111,16 @@ public class UserDAO {
 		} catch (Exception e) {
 			System.out.println("DB연결 닫을 때 에러발생");
 		}
+	}
+
+	public List<User> findAllUser() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void deleteUser(String userID) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

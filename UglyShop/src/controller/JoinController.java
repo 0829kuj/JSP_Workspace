@@ -13,20 +13,20 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
 import beans.User;
-import dao.UserDAO;
+import dao.UserDao;
 
 @WebServlet("/JoinController")
 public class JoinController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private UserDAO userDao;
+	private UserDao userDao;
 
 	@Resource(name = "jdbc/shop")
 	private DataSource dataSource;
 
 	public void init() throws ServletException {
 		super.init();
-		userDao = new UserDAO(dataSource);
+		userDao = new UserDao(dataSource);
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)

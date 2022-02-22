@@ -7,13 +7,13 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
-public class ManagerDAO {
+public class ManagerDao {
 	private DataSource dataSource; // jdbc/demo 커넥션 풀 연결 객체
 	private Connection conn;
 	private PreparedStatement pstmt;
 	private ResultSet rs;
 	
-	public ManagerDAO(DataSource dataSource) {
+	public ManagerDao(DataSource dataSource) {
 		this.dataSource = dataSource;
 	}
 	

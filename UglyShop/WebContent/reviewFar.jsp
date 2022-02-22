@@ -1,6 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <jsp:include page="/includes/headerFar.jsp" />
+<style>
+  .input-group {
+    background-color: bisque;
+  }
+</style>
 <h2>review 리스트 페이지 농민ver</h2>
 <div class="row mt-5">
   <div class="col-md-8 mx-auto">
@@ -30,9 +34,11 @@
     </table>
   </div>
 </div>
-
 <jsp:include page="/includes/footerFar.jsp" />
+<script src="https://cdn.datatables.net/v/bs4/dt-1.10.24/datatables.min.js"></script>
+<script src="<%=request.getContextPath()%>/js/reviewList.js"></script>
+
 <script>
-	$('.nav-link').removeClass('active'); // 모든 메뉴의 액티브클래스를 삭제
-	$('#m-reviewFar').addClass('active');	// 네브바에서 메뉴중 m-home에 active 클래스를 주는 스크립트
+  $('.nav-link').removeClass('active'); // 모든 메뉴의 액티브클래스를 삭제
+  $('#m-reviewFar').addClass('active'); // 네브바에서 메뉴중 m-home에 active 클래스를 주는 스크립트
 </script>

@@ -13,20 +13,20 @@ import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 import beans.User;
-import dao.UserDAO;
+import dao.UserDao;
 
 @WebServlet("/userController")
 public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private UserDAO userDao;
+	private UserDao userDao;
 
 	@Resource(name = "jdbc/shop")
 	private DataSource dataSource;
 
 	public void init() throws ServletException {
 		super.init();
-		userDao = new UserDAO(dataSource);
+		userDao = new UserDao(dataSource);
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)

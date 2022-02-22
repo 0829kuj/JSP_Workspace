@@ -113,6 +113,27 @@ public class ReviewDao {
 		return list;
     }
     
+	public boolean delete(int reviewID) {
+		
+			boolean rowDeleted = false;
+					
+			try {
+				conn = datasource.getConnection();
+				pstmt = conn.prepareStatement("DELETE FROM review WHERE reviewid = ?");
+				pstmt.setInt(1, reviewID);
+				rowDeleted = pstmt.executeUpdate() > 0;
+				
+			} catch (SQLException e) {
+				System.out.println("SQL 삭제 에러");
+				return false;
+			}finally {
+				closeAll();
+			}
+			System.out.println("리뷰 삭제!");
+			
+			return rowDeleted;
+	}
+    
 	public void closeAll() {
 		try {
 			// 생성한 순서의 역순으로 닫아줌. rs > pstmt > conn (pool로 되돌아감)

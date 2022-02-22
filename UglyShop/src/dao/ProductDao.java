@@ -81,6 +81,22 @@ public class ProductDao {
 		return prod;
 	}
 	
+	public int prodCount() {
+		// 상품의 전체갯수를 받아오는 메서드
+		int totalCount = 0;
+		
+		try {
+			conn = datasource.getConnection();
+			pstmt = conn.prepareStatement("select count(*) as prodCount from product");
+			rs = pstmt.executeQuery();
+			if(rs.next())
+				totalCount = rs.getInt("prodCount");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return totalCount;
+	}
+	
 	public void closeAll() {
 		try {
 			if(rs != null) rs.close();

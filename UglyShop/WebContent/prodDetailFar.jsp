@@ -2,7 +2,6 @@
 <jsp:include page="/includes/headerFar.jsp" />
 
 <style>
-  /* 원래 여기들어가면 안되는데(head태그 내부에 링크해야함) 일단 화면레이아웃을 잡아야하니 여기넣음 */
 .container{
   background-color: lightgray;
   display: flex;
@@ -11,8 +10,7 @@
   margin-left: 40px;
 }
 .info{
-  position: relative;
-  bottom: 0;
+  word-break:break-all;
 }
 h3{
   margin-bottom: 30px;
