@@ -56,14 +56,14 @@ public class JoinController extends HttpServlet {
 			String password = request.getParameter("userPassword");
 			String repassword = request.getParameter("userPassword2");
 
-			if (password != repassword) {
+			if (!password.equals(repassword)) {
 				request.setAttribute("message", "p");
 				request.getRequestDispatcher("join/join.jsp").forward(request, response);
 			} else {
 				int result = userDao.join(user);
 
 				if (result == 1) {
-					request.setAttribute("message", "r1"); // 회원가입 성공
+					System.out.println("회원가입 성공"); // 회원가입 성공
 
 					RequestDispatcher dispatcher = request.getRequestDispatcher("login/login.jsp");
 					dispatcher.forward(request, response);

@@ -11,6 +11,7 @@
 }
 .info{
   word-break:break-all;
+  /* display: inline-block; */
 }
 h3{
   margin-bottom: 30px;
@@ -33,7 +34,7 @@ h3{
     <a class="btn btn-primary" href="#">장바구니 추가</a>
     <a class="btn btn-secondary mt-auto" href="<%= request.getContextPath() %>/reviewController?cmd=find&id=<c:out value="${product.prodID}" />">리뷰보기</a><jsp:include page="/includes/footerFar.jsp" />
   </div>
-  <div class="info">
+  <div class="info align-self-end">
   <p>상품설명</p>
   <p><c:out value="${product.prodInfo}" /></p>
   </div>

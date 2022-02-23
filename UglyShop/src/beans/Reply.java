@@ -5,9 +5,9 @@ public class Reply {
 	private String farmID;
 	private String replyContent;
 	private int reviewID;
+	private int prodID;
 	
 	public Reply() {
-		// TODO Auto-generated constructor stub
 	}
 	
 	public Reply(String farmID, String replyContant, int reviewID) {
@@ -19,6 +19,14 @@ public class Reply {
 	}
 
 	
+
+	public int getProdID() {
+		return prodID;
+	}
+
+	public void setProdID(int prodID) {
+		this.prodID = prodID;
+	}
 
 	public int getReplyID() {
 		return replyID;

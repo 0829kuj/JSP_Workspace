@@ -1,10 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <jsp:include page="/includes/headerFar.jsp" />
+<style>
+  .review {
+    background-color: cadetblue;
+  }
+  .review > p {
+    display: flex;
+  }
+</style>
 <h2>review detail 페이지 농민ver</h2>
 <br /><br />
 <!-- <div class="row mt-5"> -->
 <div class="col-md-8 mx-auto">
-  <div style="background-color: lightgray">
+  <div class="review">
     <h4>제목: <c:out value="${review.reviewTitle}" /></h4>
     <p>리뷰글번호: <c:out value="${review.reviewID}" /></p>
     <p>작성자: <c:out value="${review.userID}" /></p>
@@ -18,6 +26,7 @@
     <div style="background-color: bisque">
       <p>덧글번호: <c:out value="${reply.replyID}" /></p>
       <p>판매자ID: <c:out value="${reply.farmID}" /></p>
+      <p>상품번호: <c:out value="${reply.prodID}" /></p>
       <p><c:out value="${reply.replyContent}" /></p>
       <p>리뷰글번호: <c:out value="${reply.reviewID}" /></p>
     </div>
@@ -42,7 +51,7 @@
     <p>현재 접속한 농민의 아이디: <%=session.getAttribute("farmID") %></p>
     <p>지금농민: ${farmID}</p>
     <c:if test="${farmID eq reply.farmID }">
-      <p>reply.farmID와 세션의 farmID가 동일할때 출력되는 메세지ㄴ낭런이러니ㅏ러런어ㅏㅏ아아아아아아ㅏㅇ13216546874632135798746312123</p>
+      <p>reply.farmID와 세션의 farmID가 동일할때 출력되는 메세지입니다.</p>
       <c:if test="${reply.replyID ne null }">
         <form name="replyDel" action="<%= request.getContextPath() %>/replyController" method="post">
           <input type="hidden" name="cmd" value="delete" />

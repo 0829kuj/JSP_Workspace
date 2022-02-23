@@ -4,6 +4,13 @@
   .input-group {
     background-color: bisque;
   }
+  .col-sm-12 {
+    display: flex;
+  }
+
+  .dataTables_filter {
+    margin-left: auto;
+  }
 </style>
 <h2>review 리스트 페이지 농민ver</h2>
 <div class="row mt-5">

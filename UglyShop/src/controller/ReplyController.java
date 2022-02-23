@@ -90,6 +90,7 @@ public class ReplyController extends HttpServlet {
 
 //		reply.setReplyID(Integer.parseInt(request.getParameter("replyID")));	// replyID는 직접 입력받는 값이 아님
 		reply.setFarmID(request.getParameter("farmID"));
+//		reply.setProdID(Integer.parseInt(request.getParameter("prodID")));
 		reply.setReplyContent(request.getParameter("replyContent"));
 		reply.setReviewID(Integer.parseInt(request.getParameter("reviewID")));
 		

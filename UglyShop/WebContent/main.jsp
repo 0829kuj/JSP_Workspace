@@ -19,7 +19,7 @@
 	
 	<nav class="navbar navbar-expand-lg navbar-dark"
 		style="background-color: gray">
-		<a class="navbar-brand" href="#">Navbar</a>
+		<a class="navbar-brand" href="<%=request.getContextPath()%>">홈페이지</a>
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
 			data-bs-target="#navbarSupportedContent"
 			aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -28,10 +28,8 @@
 		</button>
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-				<li class="nav-item"><a class="nav-link active"
-					aria-current="page" href="<%=request.getContextPath()%>/main.jsp">메인</a></li>
-				<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/proListFar.jsp">농산품</a></li>
-				<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/reviewController">리뷰</a></li>
+				<li class="nav-item"><a class="nav-link" href="#">농산품</a></li>
+				<li class="nav-item"><a class="nav-link" href="#">리뷰</a></li>
 			</ul>
 			<form class="d-flex mb-2 mb-auto">
 				<input class="form-control" type="search" placeholder="Search"
@@ -57,7 +55,7 @@
 						<li><a class="dropdown-item" href="<%=request.getContextPath()%>/logout.jsp">로그아웃</a></li>
 						<li><a class="dropdown-item" href="#">장바구니</a></li>
 						<li><a class="dropdown-item" href="#">주문조회</a></li>
-						<li><a class="dropdown-item" href="#">고객정보수정</a></li>
+						<li><a class="dropdown-item" href="<%=request.getContextPath()%>/update/userPassword.jsp">고객정보수정</a></li>
 					</ul>
 				</li>
 			</ul>
@@ -66,8 +64,6 @@
 			%>
 		</div>
 	</nav>
-	<p>현재 접속한 유저의 아이디: <%=session.getAttribute("userID") %></p>
-	<p>현재 접속한 농민의 아이디: <%=session.getAttribute("farmID") %></p>
 <script src="<%=request.getContextPath()%>/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

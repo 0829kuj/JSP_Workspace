@@ -4,21 +4,20 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import javax.annotation.Resource;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 import beans.Farmer;
 import dao.FarmerDao;
 
 
-@WebServlet("/farmerController")
-public class LoginController2 extends HttpServlet {
+
+@WebServlet("/UpdateContoller2")
+public class UpdateController2 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private FarmerDao farmerDao;
@@ -33,29 +32,11 @@ public class LoginController2 extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// 로그인, 회원가입 폼을 작성하지 않을 때 그냥 페이지 넘기는 용
 		response.setContentType("text/html; charset=UTF-8");
-		PrintWriter out = response.getWriter();
 		String action = request.getParameter("action");
 
 		if (action == null) {
-			request.getRequestDispatcher("/main.jsp").forward(request, response);
-		} else if (action.equals("login")) {
-			request.setAttribute("farmID", "");
-			request.setAttribute("farmPassword", "");
-			request.setAttribute("message", "");
-			request.getRequestDispatcher("/login2.jsp").forward(request, response);
-		}
-		// else if(action.equals("createaccount")) {
-		// request.setAttribute("email", "");
-		// request.setAttribute("password", "");
-		// request.setAttribute("message", "");
-		// request.getRequestDispatcher("/createaccount.jsp").forward(request,
-		// response);
-		// }
-		else {
-			out.println("없는 액션입니다.");
-			return;
+			request.getRequestDispatcher("/main2.jsp").forward(request, response);
 		}
 	}
 
@@ -72,38 +53,38 @@ public class LoginController2 extends HttpServlet {
 			return;
 		}
 
-		if (action.equals("dologin")) {
+		if (action.equals("docheck")) {
 			String farmID = request.getParameter("farmID");
 			String farmPassword = request.getParameter("farmPassword");
-			
+
 			Farmer farmer = new Farmer();
-			
+
 			farmer.setFarmID(farmID);
 			farmer.setFarmPassword(farmPassword);
 
 			int result = farmerDao.login(farmID, farmPassword);
 
 			if (result == 1) {
-				HttpSession session = request.getSession();
-				session.setAttribute("farmID", farmID);
-
-				RequestDispatcher dispatcher = request.getRequestDispatcher("homeFar.jsp");
-				dispatcher.forward(request, response);
+				request.getRequestDispatcher("update/farmerUpdate.jsp").forward(request, response);
 			} else if (result == 0) {
-				request.setAttribute("farmID", farmID); // 패스워드만 틀린 경우이기 때문에 userID는 보이도록 남겨줌
 				request.setAttribute("message", "0");
-				
-				request.getRequestDispatcher("login/login3.jsp").forward(request, response);
-			} else if (result == -1) {
-				request.setAttribute("farmID", farmID);
-				request.setAttribute("message", "-1");
-				
-				request.getRequestDispatcher("login/login3.jsp").forward(request, response);
+
+				request.getRequestDispatcher("update/farmerPassword.jsp").forward(request, response);
+			}
+		} else if (action.equals("doupdate")) {
+			Farmer farmer = new Farmer();
+			farmer.setFarmID(request.getParameter("farmID"));
+			farmer.setFarmPassword(request.getParameter("farmPassword"));
+			farmer.setFarmName(request.getParameter("farmName"));
+			farmer.setFarmAdd(request.getParameter("farmAdd"));
+			farmer.setFarmTel(request.getParameter("farmTel"));
+
+			boolean update = farmerDao.farmerupdate(farmer);
+
+			if (update) {
+				request.getRequestDispatcher("update/farmerSuccess.jsp").forward(request, response);
 			}
 
 		}
-		
-
 	}
-
 }

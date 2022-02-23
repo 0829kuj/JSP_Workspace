@@ -57,14 +57,14 @@ public class JoinController2 extends HttpServlet {
 			String password = request.getParameter("farmPassword");
 			String repassword = request.getParameter("farmPassword2");
 
-			if (password != repassword) {
+			if (!password.equals(repassword)) {
 				request.setAttribute("message", "p");
 				request.getRequestDispatcher("join/join2.jsp").forward(request, response);
 			} else {
 				int result = farmerDao.join(farmer);
 
 				if (result == 1) {
-					request.setAttribute("message", "r1"); // 회원가입 성공
+					System.out.println("회원가입 성공"); // 회원가입 성공
 
 					RequestDispatcher dispatcher = request.getRequestDispatcher("login/login2.jsp");
 					dispatcher.forward(request, response);

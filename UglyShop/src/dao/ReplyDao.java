@@ -35,6 +35,7 @@ public class ReplyDao {
 				reply = new Reply();
 				reply.setReplyID(rs.getInt("replyID"));
 				reply.setFarmID(rs.getString("farmID"));
+				reply.setProdID(rs.getInt("prodID"));
 				reply.setReplyContent(rs.getString("replyContent"));
 				reply.setReviewID(rs.getInt("reviewID"));
 				

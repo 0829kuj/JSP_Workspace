@@ -82,12 +82,6 @@ public class ProdController extends HttpServlet {
 		// 상품 전체출력
 		List<Product> products = prodDao.findAll();
 		
-		// 페이지네이션을 위한 총 상품 수 계산
-//		int totalCount = prodDao.prodCount();	// DB에 등록된 총 상품의 갯수 
-//		int countList = 4;	// 하나의 페이지에 나열할 상품의 숫자
-//		int totalPage = totalCount / countList;	// 총 페이지수
-		
-		
 		request.setAttribute("products", products);
 		RequestDispatcher rd = request.getRequestDispatcher("prodListFar.jsp");
 		rd.forward(request, response);

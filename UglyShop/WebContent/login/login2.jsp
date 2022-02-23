@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/bootstrap.min.css" />
+<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 <title>Insert title here</title>
 </head>
 <body>
@@ -24,7 +25,7 @@
 
 	<nav class="navbar navbar-expand-lg navbar-dark"
 		style="background-color: gray">
-		<a class="navbar-brand" href="#">Navbar</a>
+		<a class="navbar-brand" href="<%=request.getContextPath()%>/main2.jsp">홈페이지</a>
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
 			data-bs-target="#navbarSupportedContent"
 			aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -33,10 +34,8 @@
 		</button>
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-				<li class="nav-item"><a class="nav-link active"
-					aria-current="page" href="<%=request.getContextPath()%>/main.jsp">메인</a></li>
-				<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/ProdController">농산품</a></li>
-				<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/reviewcontroller">리뷰</a></li>
+				<li class="nav-item"><a class="nav-link" href="#">농산품</a></li>
+				<li class="nav-item"><a class="nav-link" href="#">리뷰</a></li>
 			</ul>
 			<form class="d-flex mb-2 mb-auto">
 				<input class="form-control" type="search" placeholder="Search"
@@ -48,7 +47,7 @@
 			%>
 			<ul class="navbar-nav mb-2 mb-lg-0">
 			<li class="nav-item"><a class="btn btn-primary me-2" href="#" role="button">로그인</a></li>
-			<li class="nav-item"><a class="btn btn-success me-2" href="#" role="button">회원가입</a></li>
+			<li class="nav-item"><a class="btn btn-success me-2" href="<%=request.getContextPath()%>/join/join2.jsp" role="button">회원가입</a></li>
 			</ul>
 			<%
 					}else{
@@ -60,7 +59,7 @@
 					aria-expanded="false"> 마이 페이지</a>
 					<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 						<li><a class="dropdown-item" href="<%=request.getContextPath()%>/logout.jsp">로그아웃</a></li>
-						<li><a class="dropdown-item" href="#">농민정보수정</a></li>
+						<li><a class="dropdown-item" href="<%=request.getContextPath()%>/update/farmerPassword.jsp">농민정보수정</a></li>
 					</ul>
 				</li>
 			</ul>
@@ -88,7 +87,7 @@
 <div class="container">
       <div class="row mt-5">
         <div class="col-md-6 mx-auto">
-          <h2>농민 로그인</h2>
+          <h2>로그인</h2>
           <form action="<%=request.getContextPath()%>/farmerController?action=dologin" method="post">
           	<div class="form-group">
             <label for="username">아이디 :</label>
@@ -100,13 +99,75 @@
             </div>
             <div class="form-group mt-3">
               <button type="submit" class="btn btn-outline-danger">로그인</button>
-              <a class="btn btn-primary me-2" href="login.jsp" role="button"> 고객 로그인</a>
-			  <a class="btn btn-success" href="#" role="button">카카오 로그인</a>
-            </div>
+              <a class="btn btn-outline-primary me-2" href="login.jsp" role="button"> 고객 로그인</a>
+			  <a id="custom-login-btn" href="javascript:loginWithKakao()"> 
+			  <img src="//k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg" width="180" alt="카카오 로그인 버튼" /></a></div>
           </form>
         </div>
       </div>
     </div>
+    
+ <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
  <script src="<%=request.getContextPath()%>/js/bootstrap.bundle.min.js"></script>
+ 
+ <script type="text/javascript">
+  Kakao.init('e4ff133a3e61bfceedb984e0e50fc6e5');
+  //console.log(Kakao.inInitialized());
+
+  function loginWithKakao() {
+    Kakao.Auth.login({
+      success: function(authObj) {
+        console.log(authObj); // access 토큰 값
+				Kakao.Auth.setAccessToken(authObj.access_token); // access 토큰값 저장
+
+				getInfo(); // 저장된 토큰값을 사용자 정보로 가져올 함수
+      },
+      fail: function(err) {
+        console.log(err); // 로그인에 실패할 경우(?)
+      },
+    })
+  }
+
+	function getInfo(){
+		 Kakao.API.request({
+        url: '/v2/user/me',
+        success: function(res) {
+          var email = res.kakao_account.email;
+					
+		  sendID(email);
+        },
+        fail: function(error) {
+          alert(
+            '카카오 로그인에 실패했습니다' +
+              JSON.stringify(error)
+          );
+        }
+      });
+	}
+
+	const request = new XMLHttpRequest();
+
+	function sendID(email){
+	$.ajax({
+		type: 'get',
+		url: '<%=request.getContextPath()%>/KakaoController2?val=' + email,
+		success: function(data){
+			console.log(data);
+			if(data == "1"){
+				location.href="../main2.jsp";
+			} else if(data == "0"){
+				location.href="../update/farmerUpdate.jsp";
+			} else if(data == "-1"){
+				location.href="login2.jsp";
+			}
+			
+		},
+		error: function(data){
+			console.log('실패');
+		}
+	});	
+	}
+	
+</script>
 </body>
 </html>
