@@ -71,6 +71,7 @@ public class ReviewDao {
 				review.setReviewDate(rs.getDate("reviewDate").toLocalDate());
 				review.setReviewContent(rs.getString("reviewContent"));
 				review.setProdID(rs.getInt("prodID"));
+				review.setFarmID(rs.getString("farmID"));
 			}
     		
 		} catch (SQLException e) {

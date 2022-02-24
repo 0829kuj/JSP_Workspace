@@ -100,7 +100,7 @@ public class ReviewController extends HttpServlet {
 				request.setAttribute("reply", reply);
 			}
 
-			RequestDispatcher rd = request.getRequestDispatcher("reviewDetailFar.jsp");	// forward해주기 위해 RequestDispatcher로 리퀘스트를 유지함
+			RequestDispatcher rd = request.getRequestDispatcher("reviewDetailFar2.jsp");	// forward해주기 위해 RequestDispatcher로 리퀘스트를 유지함
 			rd.forward(request, response);
 			System.out.println("리뷰상세정보찾기 성공");
 			
@@ -109,12 +109,12 @@ public class ReviewController extends HttpServlet {
 	
 	private void find(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 상품상세페이지에서 리뷰를 보러갈때: 각 리뷰에 저장된 prodID로 검색해 해당상품의 리뷰만 띄워줌 
-		int id = Integer.parseInt(request.getParameter("id"));
+		int prodID = Integer.parseInt(request.getParameter("prodID"));
 		
-		List<Review> reviews = reviewDao.findProd(id);	// DB에서 조건에 맞는 모든 리뷰를 가져옴
+		List<Review> reviews = reviewDao.findProd(prodID);	// DB에서 조건에 맞는 모든 리뷰를 가져옴
 		
 		request.setAttribute("reviews", reviews); 	// "reviews"에는 key값, reviews에는 실제 값이 저장됨
-		RequestDispatcher rd = request.getRequestDispatcher("reviewFar.jsp");	// forward해주기 위해 RequestDispatcher로 리퀘스트를 유지함
+		RequestDispatcher rd = request.getRequestDispatcher("reviewDetailFar.jsp");	// forward해주기 위해 RequestDispatcher로 리퀘스트를 유지함
 		rd.forward(request, response);
 	}
 

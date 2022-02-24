@@ -20,7 +20,7 @@
   }
 </style>
 <h2>메인페이지 농민ver</h2>
-
+<p><%= request.getContextPath() %></p>
 <p>현재 접속한 유저의 아이디: <%=session.getAttribute("userID")%></p>
 <p>현재 접속한 농민의 아이디: <%=session.getAttribute("farmID")%></p>
 <div class="container">

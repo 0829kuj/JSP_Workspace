@@ -82,15 +82,15 @@ public class ReplyController extends HttpServlet {
 			System.out.println("덧글 찾기 완료");
 			System.out.println(reply);
 		}
+		
 	}
 
 	private void edit(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		// 덧글작성버튼을 눌렀을때 덧글작성메서드가 실행되도록
 		Reply reply = new Reply();
 
-//		reply.setReplyID(Integer.parseInt(request.getParameter("replyID")));	// replyID는 직접 입력받는 값이 아님
 		reply.setFarmID(request.getParameter("farmID"));
-//		reply.setProdID(Integer.parseInt(request.getParameter("prodID")));
+		reply.setProdID(Integer.parseInt(request.getParameter("prodID")));
 		reply.setReplyContent(request.getParameter("replyContent"));
 		reply.setReviewID(Integer.parseInt(request.getParameter("reviewID")));
 		

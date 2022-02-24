@@ -93,12 +93,12 @@ public class LoginController2 extends HttpServlet {
 				request.setAttribute("farmID", farmID); // 패스워드만 틀린 경우이기 때문에 userID는 보이도록 남겨줌
 				request.setAttribute("message", "0");
 				
-				request.getRequestDispatcher("login/login3.jsp").forward(request, response);
+				request.getRequestDispatcher("login/login2.jsp").forward(request, response);
 			} else if (result == -1) {
 				request.setAttribute("farmID", farmID);
 				request.setAttribute("message", "-1");
 				
-				request.getRequestDispatcher("login/login3.jsp").forward(request, response);
+				request.getRequestDispatcher("login/login2.jsp").forward(request, response);
 			}
 
 		}

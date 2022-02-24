@@ -4,10 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.sql.DataSource;
 
 import beans.Reply;
+import beans.Review;
 // 실제 CRUD기능을 하는 클래스
 public class ReplyDao {
 	private DataSource datasource;
@@ -51,15 +54,46 @@ public class ReplyDao {
 		return reply;	
     }
     
+	public List<Reply> findProd(int prodID) {
+		// prodID가 같은 덧글을 모두 찾아옴
+		List<Reply> list = new ArrayList<Reply>();
+		
+		try {
+			conn = datasource.getConnection();
+			pstmt = conn.prepareStatement("select * from reply where prodID=?");
+			pstmt.setInt(1, prodID);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				Reply reply = new Reply();
+				reply.setReplyID(rs.getInt("replyID"));
+				reply.setReviewID(rs.getInt("reviewID"));
+				reply.setProdID(rs.getInt("prodID"));
+				
+				list.add(reply);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("SQL에러 - reply findProd");
+		} finally {
+			closeAll();
+		}
+ 
+		return list;
+	}
+    
+    
     public boolean save(Reply reply) {
     	boolean rowsaved = false;
     	
     	try {
 			conn = datasource.getConnection();
-	    	pstmt = conn.prepareStatement("insert into reply(farmID,replyContent,reviewID) values (?,?,?)");
+	    	pstmt = conn.prepareStatement("insert into reply(farmID,replyContent,reviewID, prodID) values (?,?,?,?)");
 	    	pstmt.setString(1, reply.getFarmID());
 	    	pstmt.setString(2, reply.getReplyContent());
 	    	pstmt.setInt(3, reply.getReviewID());
+	    	pstmt.setInt(4, reply.getProdID());
 	    	rowsaved = pstmt.executeUpdate() > 0;	// 저장된 행이 1이상이면 true
 	    	
 	    	System.out.println("덧글 작성 성공");
@@ -103,5 +137,5 @@ public class ReplyDao {
 			System.out.println("DB연결 닫는작업에서 에러발생!");
 		}
     }
-    
+
 }

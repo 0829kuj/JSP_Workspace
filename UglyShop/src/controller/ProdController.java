@@ -50,7 +50,7 @@ public class ProdController extends HttpServlet {
 			case "find":		// 상품 하나의 상세정보 출력
 				find(request, response);
 				break;
-			case "del":			// 삭제
+			case "delete": // 삭제
 				delete(request, response);
 				break;
 			case "list":		// 전체 상품을 화면에 테이블로 표시

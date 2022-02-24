@@ -64,7 +64,7 @@
       <tr>
         <div style="background-color: khaki;">
         <td>
-          <img class="ProdImg" src='<c:out value="${products.prodImg}" />' alt="상품사진">
+          <img class="ProdImg" src="<%= request.getContextPath() %>/assets/img/<c:out value='${products.prodImg}' />.jpg" alt="상품사진">
         </td>
         <td><h5><c:out value="${products.prodName}" /></h5></td>
         <td>판매자: <c:out value="${products.farmID}" /></td>

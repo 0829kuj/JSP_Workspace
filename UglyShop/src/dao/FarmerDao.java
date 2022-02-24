@@ -161,14 +161,14 @@ public class FarmerDao {
 		}
 	}
 
-	public void deleteFarmer(String farmID) {
-		// TODO Auto-generated method stub
-		
-	}
-
 	public List<Farmer> findAllFarmer() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public void deleteFarmer(String farmID) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }
