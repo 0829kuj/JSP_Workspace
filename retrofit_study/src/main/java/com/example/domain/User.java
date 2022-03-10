@@ -1,7 +1,13 @@
-package todoApp.model;
+package com.example.domain;
+
+import com.google.gson.annotations.SerializedName;
 
 public class User {
+	
+	// 원래는 json의 속성이름과 똑같이 맞춰줘야하지만 부득이하게 다른이름을 써야 할 경우 어노테이션을 사용해 받은 값의 이름이 달라도 지정한 속성명의 값을 해당 변수에 저장할 수 있다.
+	@SerializedName("firstName")
 	private String firstName;
+	
 	private String lastName;
 	private String userName;
 	private String password;

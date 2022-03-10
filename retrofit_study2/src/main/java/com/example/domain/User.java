@@ -1,14 +1,20 @@
-package todoApp.model;
+package com.example.domain;
+
+import com.google.gson.annotations.SerializedName;
 
 public class User {
+	
+	// JSON문자열의 name 속성과 멤버변수명이 일치하지 않을경우에는
+	// @SerializedName 값으로 일치시키면 해당값이 매핑됨.
+	@SerializedName("firstName")
 	private String firstName;
+	
 	private String lastName;
 	private String userName;
 	private String password;
 	
-	public User() {	}	// 기본생성성자는 java bean용으로 필요
-	
-	// 이 User생성자는 UserController에서 User객체를 사용할 때 4개의 매개변수가 모두 필요하므로 미리 만들어둠
+	public User() {} //기본 생성자는 자바 빈용으로 필요
+	// 유저 생성자 
 	public User(String firstName, String lastName, String userName, String password) {
 		super();
 		this.firstName = firstName;
@@ -16,6 +22,7 @@ public class User {
 		this.userName = userName;
 		this.password = password;
 	}
+	// set/get 메소드를 자동완성
 	public String getFirstName() {
 		return firstName;
 	}
@@ -46,5 +53,8 @@ public class User {
 		return "User [firstName=" + firstName + ", lastName=" + lastName + ", userName=" + userName + ", password="
 				+ password + "]";
 	}
-	
 }
+
+
+
+
