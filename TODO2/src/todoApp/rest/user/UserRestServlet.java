@@ -173,12 +173,42 @@ public class UserRestServlet extends HttpServlet {
 		System.out.println("doPut() 호출됨");
 		addCount();
 		
-		
 		req.setCharacterEncoding("utf-8");	// 한글처리
 		
 		BufferedReader reader = req.getReader();	// 문자 입력스트림 가져오기
 		
-		User user = gson.fromJson(reader, User.class); // JSON문자열로부터 User 자바객체로 변환
+		String category = req.getParameter("category");
+		System.out.println("category : " + category);
+		
+		if (category.equals("modify")) {
+			updateUser(req, resp);
+			
+		} else if (category.equals("password")) {
+			updateUserPassword(req, resp);
+		}
+	} // doPut
+	
+	
+	private void updateUserPassword(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		String id = request.getParameter("id");
+		String pwd = request.getParameter("pwd");
+		
+		userDao.updatePasswordById(pwd, id); // 회원 아이디에 해당하는 비밀번호 수정
+		
+		UserResult userResult = new UserResult();
+		userResult.setSuccess(true);
+		
+		String strJson = gson.toJson(userResult);
+		
+		sendResponse(strJson, response);
+	} // updateUserPassword
+	
+
+	private void updateUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		BufferedReader reader = request.getReader(); // 문자 입력스트림 가져오기
+
+		User user = gson.fromJson(reader, User.class); // JSON 문자열로부터 User 객체로 변환하기
 		System.out.println(user.toString());
 		
 		userDao.update(user); // 회원정보 수정
@@ -189,9 +219,9 @@ public class UserRestServlet extends HttpServlet {
 		
 		String strJson = gson.toJson(userResult);
 		
-		sendResponse(strJson, resp);
-		
-	}
+		sendResponse(strJson, response);
+	} // updateUser
+	
 
 	@Override
 	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

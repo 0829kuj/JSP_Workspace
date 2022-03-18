@@ -166,6 +166,35 @@ public class UserRestServlet extends HttpServlet {
 		
 		request.setCharacterEncoding("utf-8"); // 한글처리
 		
+		String category = request.getParameter("category");
+		System.out.println("category : " + category);
+		
+		if (category.equals("modify")) {
+			updateUser(request, response);
+			
+		} else if (category.equals("password")) {
+			updateUserPassword(request, response);
+		}
+	} // doPut
+	
+	
+	private void updateUserPassword(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		String id = request.getParameter("id");
+		String pwd = request.getParameter("pwd");
+		
+		userDao.updatePasswordById(pwd, id); // 회원 아이디에 해당하는 비밀번호 수정
+		
+		UserResult userResult = new UserResult();
+		userResult.setSuccess(true);
+		
+		String strJson = gson.toJson(userResult);
+		
+		sendResponse(strJson, response);
+	} // updateUserPassword
+	
+
+	private void updateUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		BufferedReader reader = request.getReader(); // 문자 입력스트림 가져오기
 
 		User user = gson.fromJson(reader, User.class); // JSON 문자열로부터 User 객체로 변환하기
@@ -179,8 +208,9 @@ public class UserRestServlet extends HttpServlet {
 		String strJson = gson.toJson(userResult);
 		
 		sendResponse(strJson, response);
-	} // doPut
+	} // updateUser
 	
+
 	@Override
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("doDelete() 호출됨");

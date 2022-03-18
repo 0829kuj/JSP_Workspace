@@ -3,6 +3,7 @@ package todoApp.rest.todo;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.servlet.ServletConfig;
@@ -13,12 +14,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import todoApp.dao.TodoDao;
 import todoApp.dao.TodoDaoImpl;
 import todoApp.model.Todo;
 import todoApp.model.User;
-import todoApp.rest.user.UserResult;
 
 //요청 공통 URL주소
 //http://localhost:8090/TODO/api/todo/
@@ -27,13 +28,18 @@ import todoApp.rest.user.UserResult;
 public class TodoRestServlet extends HttpServlet {
 	
 	private TodoDao todoDao = new TodoDaoImpl();
-	private Gson gson = new Gson();
+	private Gson gson;
 	
 	
 	@Override
 	public void init(ServletConfig config) throws ServletException {
 		System.out.println("TodoRestServlet init() 호출됨");
-	}
+		
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.registerTypeAdapter(LocalDate.class, new LocalDateSerializer());
+		gsonBuilder.registerTypeAdapter(LocalDate.class, new LocalDateDeserializer());
+		gson = gsonBuilder.setPrettyPrinting().create();
+	} // init
 	
 	
 	private void sendResponse(String strJson, HttpServletResponse response) throws IOException {
@@ -53,7 +59,7 @@ public class TodoRestServlet extends HttpServlet {
 		// http://localhost:8090/TODO/api/todo?category=one&id=3
 		
 		// 레코드 특정 사용자 데이터만(여러개) 조회
-		// http://localhost:8090/TODO/api/todo?category=mine&username=hong
+		// http://localhost:8090/TODO/api/todo?category=me&username=hong
 		
 		// 레코드 전체(여러개) 조회 
 		// http://localhost:8090/TODO/api/todo?category=all
@@ -63,8 +69,8 @@ public class TodoRestServlet extends HttpServlet {
 		
 		if (category.equals("one")) {
 			strJson = processGetOne(request);
-		} else if (category.equals("mine")) {
-			strJson = processGetMine(request);
+		} else if (category.equals("me")) {
+			strJson = processGetMe(request);
 		} else if (category.equals("all")) {
 			strJson = processGetAll(request);
 		}
@@ -94,20 +100,21 @@ public class TodoRestServlet extends HttpServlet {
 	} // processGetOne
 	
 	
-	private String processGetMine(HttpServletRequest request) {
+	private String processGetMe(HttpServletRequest request) {
 		
 		String username = request.getParameter("username");
 		
-		List<Todo> todoList = todoDao.selectTodoByUsername(username);
+		User user = todoDao.getUserAndTodos(username);
 		
 		TodoListResult todoListResult = new TodoListResult();
-		if (todoList.size() > 0) {
+		
+		if (user != null) {
 			todoListResult.setHasResult(true);
-			todoListResult.setTotalCount(todoList.size());
-			todoListResult.setTodoList(todoList);
-		} else {
+			todoListResult.setTotalCount(user.getTodoList().size());
+			todoListResult.setUser(user);
+		} else { // user == null
 			todoListResult.setHasResult(false);
-			todoListResult.setTotalCount(todoList.size());
+			todoListResult.setTotalCount(0);
 		}
 		
 		String strJson = gson.toJson(todoListResult);
@@ -118,19 +125,20 @@ public class TodoRestServlet extends HttpServlet {
 	
 	private String processGetAll(HttpServletRequest request) {
 
-		List<Todo> todoList = todoDao.selectAllTodos();
+		List<User> userList = todoDao.getAllUsersAndTodoCount();
 		
-		TodoListResult todoListResult = new TodoListResult();
-		if (todoList.size() > 0) {
-			todoListResult.setHasResult(true);
-			todoListResult.setTotalCount(todoList.size());
-			todoListResult.setTodoList(todoList);
+		TodoListUsersResult result = new TodoListUsersResult();
+		
+		if (userList.size() > 0) {
+			result.setHasResult(true);
+			result.setTotalCount(userList.size());
+			result.setUserList(userList);
 		} else {
-			todoListResult.setHasResult(false);
-			todoListResult.setTotalCount(todoList.size());
+			result.setHasResult(false);
+			result.setTotalCount(userList.size());
 		}
 		
-		String strJson = gson.toJson(todoListResult);
+		String strJson = gson.toJson(result);
 		System.out.println("strJson : " + strJson);
 		return strJson;
 	} // processGetAll
@@ -157,6 +165,18 @@ public class TodoRestServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8"); // 한글처리
 		
 		BufferedReader reader = request.getReader(); // 문자 입력스트림 가져오기
+		
+	
+//		StringBuilder sb = new StringBuilder();
+//		String line = "";
+//		while ((line = reader.readLine()) != null) {
+//			sb.append(line + "\n");
+//		} // while
+//		System.out.println("sb.toString() : " + sb.toString());
+		
+		
+		
+		
 
 		Todo todo = gson.fromJson(reader, Todo.class); // JSON 문자열로부터 User 객체로 변환하기
 		System.out.println(todo.toString());

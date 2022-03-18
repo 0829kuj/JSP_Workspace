@@ -3,6 +3,7 @@ package controller;
 import java.io.IOException;
 
 import javax.annotation.Resource;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -46,13 +47,13 @@ public class ReplyController extends HttpServlet {
 		
 		try {
 			switch (action) {
-			case "find":
+			case "find":	// 덧글 찾기
 				find(request, response);
 				break;
-			case "edit":
-				edit(request, response);
-				break;
-			case "delete":
+//			case "edit":	// 덧글 수정 (주소창에 내용이 떠서 수정함)
+//				edit(request, response);
+//				break;
+			case "delete":	// 덧글 삭제
 				delete(request, response);
 				break;
 			default:
@@ -78,13 +79,34 @@ public class ReplyController extends HttpServlet {
 		}
 	}
 
-	private void edit(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+	private void delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// 덧글삭제버튼을 눌렀을때 덧글삭제메서드가 실행되도록
+		int id = Integer.parseInt(request.getParameter("replyID"));	// replyID를 가져옴
+		int review = Integer.parseInt(request.getParameter("id"));
+		
+		boolean isDeleted = replyDao.delete(id);
+		if(isDeleted) {
+//			response.sendRedirect("reviewController");	 // 테스트용 페이지 단순이동(정보 안갖고 이동)
+
+			RequestDispatcher rd = request.getRequestDispatcher("reviewController?cmd=view&id=" + review);	// forward해주기 위해 RequestDispatcher로 리퀘스트를 유지함
+			rd.forward(request, response);
+			
+			System.out.println("삭제왼료@@");
+		}
+	}
+
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 덧글작성버튼을 눌렀을때 덧글작성메서드가 실행되도록
+		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html;charset=UTF-8");
+		
+		int review = Integer.parseInt(request.getParameter("id"));
+		
 		Reply reply = new Reply();
 
 //		reply.setReplyID(Integer.parseInt(request.getParameter("replyID")));	// replyID는 직접 입력받는 값이 아님
 		reply.setFarmID(request.getParameter("farmID"));
-//		reply.setProdID(Integer.parseInt(request.getParameter("prodID")));
 		reply.setReplyContent(request.getParameter("replyContent"));
 		reply.setReviewID(Integer.parseInt(request.getParameter("reviewID")));
 		
@@ -94,32 +116,10 @@ public class ReplyController extends HttpServlet {
 //			RequestDispatcher rd = request.getRequestDispatcher("reviewController?cmd=view&reviewID="+ reply.getReviewID());
 //			rd.forward(request, response);
 			
-			// 일단 리뷰리스트로 가도록 테스트한 후 받아온 정보의 reviewID를 사용해 리뷰디테일페이지로 바로 접속할수있는지 테스트
-			response.sendRedirect("reviewController");
+			RequestDispatcher rd = request.getRequestDispatcher("reviewController?cmd=view&id=" + review);	// forward해주기 위해 RequestDispatcher로 리퀘스트를 유지함
+			rd.forward(request, response);
 			System.out.println("입력완료@@");
 		}
-
-	}
-
-
-	private void delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// 덧글삭제버튼을 눌렀을때 덧글삭제메서드가 실행되도록
-		int id = Integer.parseInt(request.getParameter("replyID"));	// replyID를 가져옴
-		boolean isDeleted = replyDao.delete(id);
-		if(isDeleted) {
-			response.sendRedirect("reviewController");	 // 테스트용 페이지 단순이동(정보 안갖고 이동)
-
-//			RequestDispatcher rd = request.getRequestDispatcher("reviewDetailFar.jsp");	// forward해주기 위해 RequestDispatcher로 리퀘스트를 유지함
-//			rd.forward(request, response);
-			System.out.println("삭제왼료@@");
-			
-		}
-	}
-
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		doGet(request, response);
 	}
 
 }

@@ -4,8 +4,15 @@ package todoApp.dao;
 import java.util.List;
 
 import todoApp.model.Todo;
+import todoApp.model.User;
 
 public interface TodoDao {
+	
+	
+	User getUserAndTodos(String userName);
+	
+	List<User> getAllUsersAndTodoCount();
+	
 	
 	// Create 입력 => 할 일을 DB에 입력
 	void insertTodo(Todo todo);

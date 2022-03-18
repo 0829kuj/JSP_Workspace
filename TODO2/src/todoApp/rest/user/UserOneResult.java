@@ -23,7 +23,5 @@ public class UserOneResult {
 	@Override
 	public String toString() {
 		return "UserOneResult [user=" + user + ", hasResult=" + hasResult + "]";
-	}	
-	
-	
+	}
 }

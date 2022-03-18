@@ -19,9 +19,9 @@ public class TodoOneResult {
 	public void setHasResult(boolean hasResult) {
 		this.hasResult = hasResult;
 	}
+	
 	@Override
 	public String toString() {
 		return "TodoOneResult [todo=" + todo + ", hasResult=" + hasResult + "]";
 	}
-	
 }

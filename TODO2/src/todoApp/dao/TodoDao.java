@@ -3,9 +3,14 @@ package todoApp.dao;
 import java.util.List;
 
 import todoApp.model.Todo;
+import todoApp.model.User;
 
 // 인터페이스. 메서드와 매개변수, 리턴형만 지정해둔 상태. 구현은 안되어있으며 dao로 이 인터페이스를 구현해서 기능을 완성해야함. 
 public interface TodoDao {
+	
+	User getUserAndTodos(String userName);
+	
+	List<User> getAllUsersAndTodoCount();
 	
 	void insertTodo(Todo todo);			// Create 입력 => 할 일을 DB에 입력
 	Todo selectTodo(long todoId);		// Read => id로 할일을 검색 
@@ -19,4 +24,5 @@ public interface TodoDao {
 	boolean deleteTodo(String username);// Delete => 할일을 삭제 (username으로)
 	
 	boolean updateTodo(Todo todo);		// Update => 할일을 업데이트 (제대로 업데이트되었는지 true, false로 리턴) 
+
 }

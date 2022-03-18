@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import todoApp.model.Todo;
 import todoApp.model.User;
 import todoApp.utils.JDBCUtils;
 
@@ -42,16 +43,19 @@ public class UserDao {
 		return result;
 	} // registerUser
 	
+
 	public User getUserByUserName(String userName) {
 		User user = null;
 		
-		String sql = "SELECT * FROM users WHERE userName = ?";
+		String sql = "SELECT * FROM users WHERE userName = ? ";
+		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
 		try {
 			conn = JDBCUtils.getConnection();
+			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, userName);
 			
@@ -69,16 +73,14 @@ public class UserDao {
 		} finally {
 			JDBCUtils.close(conn, pstmt, rs);
 		}
-		
 		return user;
 	} // getUserByUserName
 	
 	
 	public List<User> getAllUsers() {
-		List<User> userList = new ArrayList<>(); 
-
+		List<User> userList = new ArrayList<User>();
 		
-		String sql = "SELECT * FROM users ORDER BY userName ASC";
+		String sql = "SELECT * FROM users ORDER BY userName ASC ";
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -86,6 +88,7 @@ public class UserDao {
 		
 		try {
 			conn = JDBCUtils.getConnection();
+			
 			pstmt = conn.prepareStatement(sql);
 			
 			rs = pstmt.executeQuery();
@@ -104,18 +107,17 @@ public class UserDao {
 		} finally {
 			JDBCUtils.close(conn, pstmt, rs);
 		}
-		
-		
 		return userList;
 	} // getAllUsers
 	
 	
 	public void update(User user) {
+		
 		String sql = "";
 		sql += " UPDATE users ";
 		sql += " SET firstName = ?, lastName = ? ";
 		sql += " WHERE userName = ? ";
-
+		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		
@@ -124,7 +126,7 @@ public class UserDao {
 			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, user.getFirstName());
-			pstmt.setString(1, user.getLastName());
+			pstmt.setString(2, user.getLastName());
 			pstmt.setString(3, user.getUserName());
 			
 			pstmt.executeUpdate();
@@ -134,13 +136,42 @@ public class UserDao {
 		} finally {
 			JDBCUtils.close(conn, pstmt);
 		}
+	} // update
+	
+	
+	
+	public void updatePasswordById(String pwd, String id) {
 		
-	} //update
+		String sql = "";
+		sql += " UPDATE users ";
+		sql += " SET password = ? ";
+		sql += " WHERE userName = ? ";
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			conn = JDBCUtils.getConnection();
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, pwd);
+			pstmt.setString(2, id);
+			
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCUtils.close(conn, pstmt);
+		}
+	} // updatePasswordById
+	
 	
 	
 	public void delete(String userName) {
-		String sql = " delete from users where userName = ? ";
-
+		
+		String sql = "DELETE FROM users WHERE userName = ? ";
+		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		
@@ -157,6 +188,6 @@ public class UserDao {
 		} finally {
 			JDBCUtils.close(conn, pstmt);
 		}
-		
-	} //delete
-}
+	} // delete
+	
+} // class UserDao

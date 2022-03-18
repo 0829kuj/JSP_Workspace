@@ -9,11 +9,121 @@ import java.util.ArrayList;
 import java.util.List;
 
 import todoApp.model.Todo;
+import todoApp.model.User;
 import todoApp.utils.JDBCUtils;
 
 public class TodoDaoImpl implements TodoDao {
 //DB연결하고 각 기능에 맞게 작업한다. 데이터베이스 todos테이블에 CRUD 작업
 
+	
+	
+	// 외부 조인해서 가져오기 메소드
+	public User getUserAndTodos(String userName) {
+		User user = null;
+		List<Todo> todoList = new ArrayList<Todo>();
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String sql = "";
+		sql += " SELECT u.id AS user_id, u.userName, u.firstName, u.lastName, u.password, ";
+		sql += "        t.id AS todo_id, t.title, t.description, t.is_done, t.target_date ";
+		sql += " FROM users u LEFT OUTER JOIN todos t ";
+		sql += " ON u.userName = t.username ";
+		sql += " WHERE u.userName = ? ";
+		sql += " ORDER BY target_date DESC ";
+		
+		try {
+			conn = JDBCUtils.getConnection();
+			
+			pstmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			pstmt.setString(1, userName);
+			
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				// if the value is SQL NULL, the value returned is 0
+				if (rs.getLong("todo_id") == 0) {
+					continue;
+				}
+				
+				Todo todo = new Todo();
+				todo.setId(rs.getLong("todo_id"));
+				todo.setTitle(rs.getString("title"));
+				todo.setDescription(rs.getString("description"));
+				todo.setStatus(rs.getBoolean("is_done"));
+				todo.setTargetDate((rs.getDate("target_date") != null) ? rs.getDate("target_date").toLocalDate() : null);
+				
+				todoList.add(todo); // 리스트에 추가
+			} // while
+			
+			if (rs.last()) { // 마지막 데이터 행으로 커서 위치를 이동시키기
+				user = new User();
+				user.setUserName(rs.getString("userName"));
+				user.setFirstName(rs.getString("firstName"));
+				user.setLastName(rs.getString("lastName"));
+				user.setPassword(rs.getString("password"));
+				
+				user.setTodoList(todoList);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCUtils.close(conn, pstmt, rs);
+		}
+		
+		return user;
+	} // getUserAndTodos
+	
+	
+	
+	@Override
+	public List<User> getAllUsersAndTodoCount() {
+		List<User> userList = new ArrayList<User>();
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String sql = "";
+		sql += " SELECT u.id AS user_id, u.userName, u.firstName, u.lastName, ";
+		sql += "        COUNT(t.username) AS todo_count ";
+		sql += " FROM users u LEFT OUTER JOIN todos t ";
+		sql += " ON u.userName = t.username ";
+		sql += " GROUP BY u.username ";
+		sql += " HAVING COUNT(t.username) > 0 ";
+		sql += " ORDER BY userName ASC, target_date DESC ";
+		
+		try {
+			conn = JDBCUtils.getConnection();
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				User user = new User();
+				user.setUserName(rs.getString("userName"));
+				user.setFirstName(rs.getString("firstName"));
+				user.setLastName(rs.getString("lastName"));
+				user.setTodoCount(rs.getInt("todo_count"));
+				
+				userList.add(user); // 리스트에 추가
+			} // while
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCUtils.close(conn, pstmt, rs);
+		}
+		
+		return userList;
+	} // getAllUsersAndTodoCount
+	
+	
+	
+	
 	@Override
 	public void insertTodo(Todo todo) {
 		

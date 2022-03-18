@@ -5,27 +5,29 @@
 
 <style>
 .container {
-	background-color: lightgray;
+	/* background-color: lightgray; */
 	display: flex;
 }
 
 .container2 {
+  padding: 20px;
 	margin-left: 40px;
 }
 
 .container3 {
 	/* flex-direction: column; */
-	background-color: aquamarine;
 	margin-top: 60px;
 }
-
+.ProdImg {
+  width: 550px;
+  height: 400px;
+}
 h3 {
 	margin-bottom: 30px;
 }
-
-.btn:first-child {
+/* .btn:first-child {
 	margin-right: 60px;
-}
+} */
 </style>
 
 <div class="col-md-8 mx-auto mt-5">
@@ -43,8 +45,10 @@ h3 {
 			<p id="pID" style="display: none">
 				<c:out value="${product.prodID}" />
 			</p>
-			<p>
 				판매자ID:
+				<c:out value="${product.farmID}" /><p>
+			</p>
+			<p id="fID" style="display: none">
 				<c:out value="${product.farmID}" />
 			</p>
 			<p>
@@ -86,7 +90,8 @@ h3 {
 
 	$('#cart').click(function() {
 		const id = document.querySelector('#pID').textContent;
-		const url = "cart?id=" + id;
+		const id2 = document.querySelector('#fID').textContent;
+		const url = "cart?id=" + id + "&farmID=" + id2;
 		$.get(url, function(res) {
 			console.log(res);
 			alert("장바구니에 상품이 추가되었습니다");
