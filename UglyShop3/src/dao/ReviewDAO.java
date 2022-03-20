@@ -11,13 +11,14 @@ import javax.sql.DataSource;
 
 import beans.Review;
 
-public class ReviewDAO {
+
+public class ReviewDao {
 	private DataSource datasource;
 	private Connection conn;
 	private PreparedStatement pstmt;
 	private ResultSet rs;
 	
-    public ReviewDAO(DataSource datasource) {
+    public ReviewDao(DataSource datasource) {
         this.datasource = datasource;
         // 객체 생성시 커넥션 풀 datasource를 입력
     }
@@ -71,7 +72,6 @@ public class ReviewDAO {
 				review.setReviewDate(rs.getDate("reviewDate").toLocalDate());
 				review.setReviewContent(rs.getString("reviewContent"));
 				review.setProdID(rs.getInt("prodID"));
-				review.setFarmID(rs.getString("farmID"));
 			}
     		
 		} catch (SQLException e) {
@@ -82,65 +82,10 @@ public class ReviewDAO {
 		}
     	return review;
     }
-    
-    public Review findReview(String userID, int prodID) {
-		Review review2 = null;
-		
-		try {
-			conn = datasource.getConnection();
-			pstmt = conn.prepareStatement("select * from review where userID = ? and prodID =? order by reviewID DESC;"); // 리뷰 최신순으로 나오게
-			pstmt.setString(1, userID);
-			pstmt.setInt(2, prodID);
-			rs = pstmt.executeQuery();
-			 
-			if(rs.next()) {
-				review2 = new Review(); //빈 객체를 만든다
-				review2.setReviewID(rs.getInt("reviewID"));
-				review2.setUserID(rs.getString("userID"));
-				review2.setReviewDate(rs.getDate("reviewDate").toLocalDate()); //SQL날짜 -> 자바날짜
-				review2.setReviewTitle(rs.getString("reviewTitle"));
-				review2.setReviewContent(rs.getString("reviewContent"));
-				review2.setProdID(rs.getInt("prodID"));
-				
-			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println("SQL에러 - find");
-		}finally { 
-			closeAll();
-		}
-		
-		return review2;
-	}
-    
-    public boolean save(Review review) {
-		boolean rowAffected = false;
-		
-		try {
-			conn = datasource.getConnection();
-			pstmt = conn.prepareStatement("insert into review(userID, reviewDate, reviewTitle, reviewContent, prodID) values(?,now(),?,?,?)");
-			pstmt.setString(1, review.getUserID());
-			//pstmt.setDate(2, Date.valueOf(review.getReviewDate())); // 자바날짜 -> SQL날짜
-			pstmt.setString(2, review.getReviewTitle());
-			pstmt.setString(3, review.getReviewContent());
-			pstmt.setInt(4, review.getProdID());
-			
-			rowAffected = pstmt.executeUpdate() > 0;
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println("SQL에러 - save");
-		} finally {
-			closeAll();
-		}
-		return rowAffected;
-	}
-	
+       
     public List<Review> findProd(int id) {
     	// 받아온 prodID로 같은 값을 가진 리뷰들을 모두 출력
     	List<Review> list = new ArrayList<>();
-    	
     	try {
     		conn = datasource.getConnection();
 			pstmt = conn.prepareStatement("select * from review where prodID=?");
@@ -157,6 +102,7 @@ public class ReviewDAO {
 				review.setProdID(rs.getInt("prodID"));
 				
 				list.add(review);
+				System.out.println(review.toString());
 			}
 		} catch (SQLException e) {
 			System.out.println("SQL에러 - review findProd");
@@ -189,30 +135,6 @@ public class ReviewDAO {
 			return rowDeleted;
 	}
 	
-	public boolean update(Review review) {
-		boolean rowAffected = false;
-		 // userID,prodID는 업뎃을 할필요가?
-		try {
-			conn = datasource.getConnection();
-			pstmt = conn.prepareStatement("update review set userID =? , reviewDate = now() , reviewTitle =? , reviewContent =?, prodID =? where reviewID =?");
-			pstmt.setString(1, review.getUserID());
-			//pstmt.setDate(2, Date.valueOf(review.getReviewDate()));
-			pstmt.setString(2, review.getReviewTitle());
-			pstmt.setString(3, review.getReviewContent());
-			pstmt.setInt(4, review.getProdID());
-			pstmt.setInt(5, review.getReviewID());
-			
-			rowAffected = pstmt.executeUpdate() > 0;
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println("SQL에러 - update");
-		} finally {
-			closeAll();
-		}
-		return rowAffected;
-	}
-    
 	public void closeAll() {
 		try {
 			// 생성한 순서의 역순으로 닫아줌. rs > pstmt > conn (pool로 되돌아감)
@@ -223,6 +145,4 @@ public class ReviewDAO {
 			System.out.println("DB연결 닫는 작업에서 에러발생");
 		}
 	}
-
-	
 }

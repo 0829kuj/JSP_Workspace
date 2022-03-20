@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <jsp:include page="../includes/headerUser.jsp" />
 <style>
   .review {
@@ -26,6 +27,7 @@
   }
 </style>
 
+
 <% String prodID = request.getParameter("prodID"); if(prodID != null){ %>
 <div class="container-fluid">
   <div class="col-md-8 mx-auto">
@@ -47,6 +49,7 @@
   </div>
 </div>
 <%} %>
+
 
 <jsp:include page="../includes/footer.jsp" />
 <script>

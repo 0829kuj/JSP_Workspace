@@ -6,7 +6,7 @@
     let id = $(this).attr('data-id');
     $.ajax({
       type: 'GET',
-      url: 'http://localhost:8090/UglyShop' + '/cart?id=' + id,
+      url: 'http://localhost:8091/UglyShop' + '/cart?id=' + id,
       data: $('.up').serialize(),
     }).done(function (data) {
       console.log(data);
@@ -19,7 +19,7 @@
     let id = $(this).attr('data-id');
     $.ajax({
       type: 'POST',
-      url: 'http://localhost:8090/UglyShop' + '/cart?id=' + id,
+      url: 'http://localhost:8091/UglyShop' + '/cart?id=' + id,
       data: $('.down').serialize(),
     }).done(function (data) {
       console.log(data);
@@ -32,7 +32,7 @@
     let id = $(this).attr('data-id');
     $.ajax({
       type: 'POST',
-      url: 'http://localhost:8090/UglyShop' + '/cart?cmd=delete&id=' + id,
+      url: 'http://localhost:8091/UglyShop' + '/cart?cmd=delete&id=' + id,
       data: {},
     }).done(function (data) {
       console.log(data);

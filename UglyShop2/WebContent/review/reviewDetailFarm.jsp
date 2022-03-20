@@ -8,22 +8,27 @@
     background-color: rgb(243, 243, 243);
     padding: 10px 20px;
   }
+  /* .title {
+    display: flex;
+    align-items: baseline;
+  } */
   .info {
     display: flex;
+    /* margin-top: 40px; */
   }
   .info > p {
     justify-content: right;
     margin-right: 25px;
   }
   .reply {
-    /* background-color: rgb(236, 248, 255); */
-    margin-top: 30px;
+    /* background-color: bisque; */
     padding: 10px 20px;
   }
   .reply > .info {
     margin-bottom: 20px;
   }
   .replyEdit {
+    /* background-color: grey; */
     padding: 10px 20px;
   }
   .content {
@@ -39,8 +44,8 @@
     margin-top: 20px;
   }
 </style>
-<!-- <div class="row mt-5"> -->
-<div class="col-md-8 mx-auto">
+
+<div class="col-md-8 mx-auto mt-3">
   <div class="font-weight-bold mt-3 shadow p-3 mb-4 bg-light rounded">리뷰 상세보기 페이지</div>
   <div class="review rounded">
     <h4><c:out value="${review.reviewTitle}" /></h4>
@@ -56,11 +61,12 @@
   </div>
   <!-- reply.farmID에 값이 있을때만 출력(ne가 !=와 같음) -->
   <c:if test="${reply.farmID ne null }">
+    <hr />
     <div class="reply">
       <div class="info">
         <p>덧글번호: <c:out value="${reply.replyID}" /></p>
         <p>판매자ID: <c:out value="${reply.farmID}" /></p>
-        <!--<p>상품번호: <c:out value="${reply.prodID}" /></p>-->
+        <p>상품번호: <c:out value="${reply.prodID}" /></p>
       </div>
       <p><c:out value="${reply.replyContent}" /></p>
     </div>
@@ -74,7 +80,7 @@
   <div class="replyEdit">
     <c:if test="${farmID eq review.farmID }">
       <!-- reply.replyID에 값이 있으면 덧글삭제버튼을 출력 -->
-      <c:if test="${reply.replyID ne null }">
+       <c:if test="${reply.replyID ne null }">
         <form name="replyDel" action="<%= request.getContextPath() %>/replyController" method="get">
           <input type="hidden" name="cmd" value="delete" />
           <input type="hidden" name="replyID" value='<c:out value="${reply.replyID}" />' />
@@ -84,7 +90,7 @@
       </c:if>
       <!-- reply.replyID에 값이 없으면 덧글작성창을 출력 -->
       <c:if test="${reply.replyID eq null }">
-        <form id="replyWrite" name="replyEdit" action="<%= request.getContextPath() %>/replyController" method="post">
+        <form id="replyWrite" name="replyEdit" action="<%= request.getContextPath() %>/replyController?cmd=save" method="post">
           <input type="hidden" name="cmd" value="edit" />
           <!-- <h4>덧글달기</h4> -->
           <textarea name="replyContent" id="commnet" cols="100" rows="10" placeholder="덧글을 입력해주세요." required></textarea><br />
@@ -105,3 +111,4 @@
   $('.nav-link').removeClass('active'); // 모든 메뉴의 액티브클래스를 삭제
   $('#m-reviewFar').addClass('active'); // 네브바에서 메뉴중 m-home에 active 클래스를 주는 스크립트
 </script>
+

@@ -2,24 +2,28 @@
 <jsp:include page="../includes/headerFarm.jsp" />
 
 <style>
-.container{
-  /* background-color: lightgray; */
-  display: flex;
+.container {
+	/* background-color: lightgray; */
+	display: flex;
 }
-.container2{
+.container2 {
   padding: 20px;
-  margin-left: 40px;
+	margin-left: 40px;
 }
-.container3{
-  margin-top: 60px;
+.container3 {
+	/* flex-direction: column; */
+	margin-top: 60px;
 }
 .ProdImg {
   width: 550px;
   height: 400px;
 }
-h3{
-  margin-bottom: 30px;
+h3 {
+	margin-bottom: 30px;
 }
+/* .btn:first-child {
+	margin-right: 60px;
+} */
 </style>
 
 <div class="col-md-8 mx-auto mt-5">

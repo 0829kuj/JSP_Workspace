@@ -12,13 +12,13 @@ import javax.sql.DataSource;
 import beans.Product;
 
 
-public class ProductDao {
+public class ProductDAO {
 	private DataSource dataSource;
 	private Connection conn;
 	private PreparedStatement pstmt;
 	private ResultSet rs;
 	
-	public ProductDao(DataSource datasource) {
+	public ProductDAO(DataSource datasource) {
 		this.dataSource = datasource;
 	}
 	
@@ -35,6 +35,7 @@ public class ProductDao {
 				Product prod = new Product();
 				prod.setProdID(rs.getInt("prodID"));
 				prod.setFarmID(rs.getString("farmID"));
+				prod.setFarmTel(rs.getString("farmTel"));
 				prod.setProdName(rs.getString("prodName"));
 				prod.setProdPrice(rs.getInt("prodPrice"));
 				prod.setProdImg(rs.getString("prodImg"));
@@ -64,6 +65,7 @@ public class ProductDao {
 				prod = new Product();
 				prod.setProdID(rs.getInt("prodID"));
 				prod.setFarmID(rs.getString("farmID"));
+				prod.setFarmTel(rs.getString("farmTel"));
 				prod.setProdName(rs.getString("prodName"));
 				prod.setProdPrice(rs.getInt("prodPrice"));
 				prod.setProdImg(rs.getString("prodImg"));
@@ -95,6 +97,7 @@ public class ProductDao {
 				prod = new Product();
 				prod.setProdID(rs.getInt("prodID"));
 				prod.setFarmID(rs.getString("farmID"));
+				prod.setFarmTel(rs.getString("farmTel"));
 				prod.setProdName(rs.getString("prodName"));
 				prod.setProdPrice(rs.getInt("prodPrice"));
 				prod.setProdImg(rs.getString("prodImg"));

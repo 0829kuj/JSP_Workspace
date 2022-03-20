@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import javax.annotation.Resource;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,21 +13,22 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
-import beans.User;
-import dao.UserDAO;
+import beans.Manager;
+import dao.ManagerDao;
 
-@WebServlet("/userLogin")
+
+@WebServlet("/managerController")
 public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private UserDAO userDao;
+	private ManagerDao managerDao;
 
 	@Resource(name = "jdbc/shop")
 	private DataSource dataSource;
 
 	public void init() throws ServletException {
 		super.init();
-		userDao = new UserDAO(dataSource);
+		managerDao = new ManagerDao(dataSource);
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -37,12 +39,12 @@ public class LoginController extends HttpServlet {
 		String action = request.getParameter("action");
 
 		if (action == null) {
-			request.getRequestDispatcher("main/main.jsp").forward(request, response);
+			request.getRequestDispatcher("home/managerMain.jsp").forward(request, response);
 		} else if (action.equals("login")) {
-			request.setAttribute("userID", "");
-			request.setAttribute("userPassword", "");
+			request.setAttribute("manID", "");
+			request.setAttribute("manPassword", "");
 			request.setAttribute("message", "");
-			request.getRequestDispatcher("login/loginUser.jsp").forward(request, response);
+			request.getRequestDispatcher("login/managerLogin.jsp").forward(request, response);
 		}
 		else {
 			out.println("없는 액션입니다.");
@@ -64,31 +66,33 @@ public class LoginController extends HttpServlet {
 		}
 
 		if (action.equals("dologin")) {
-			String userID = request.getParameter("userID");
-			String userPassword = request.getParameter("userPassword");
+			String manID = request.getParameter("manID");
+			String manPassword = request.getParameter("manPassword");			
 			
-			User user = new User();
+			Manager manager = new Manager();
 			
-			user.setUserID(userID);
-			user.setUserPassword(userPassword);
-
-			int result = userDao.login(userID, userPassword);
-
+			manager.setManID(manID);
+			manager.setManPassword(manPassword);
+			System.out.println(manager.getManID()+ " " + manager.getManPassword());
+			
+			int result = managerDao.login(manID, manPassword);
+			
 			if (result == 1) {
 				HttpSession session = request.getSession();
-				session.setAttribute("userID", userID);
+				session.setAttribute("manID", manID);
 
-				request.getRequestDispatcher("main/main.jsp").forward(request, response);
+				RequestDispatcher dispatcher = request.getRequestDispatcher("home/managerMain.jsp");
+				dispatcher.forward(request, response);
 			} else if (result == 0) {
-				request.setAttribute("userID", userID); // 패스워드만 틀린 경우이기 때문에 userID는 보이도록 남겨줌
+				request.setAttribute("manID", manID); // 패스워드만 틀린 경우이기 때문에 userID는 보이도록 남겨줌
 				request.setAttribute("message", "0");
 				
-				request.getRequestDispatcher("login/loginUser.jsp").forward(request, response);
+				request.getRequestDispatcher("login/managerLogin.jsp").forward(request, response);
 			} else if (result == -1) {
-				request.setAttribute("userID", userID);
+				request.setAttribute("manID", manID);
 				request.setAttribute("message", "-1");
 				
-				request.getRequestDispatcher("login/loginUser.jsp").forward(request, response);
+				request.getRequestDispatcher("login/managerLogin.jsp").forward(request, response);
 			}
 
 		}

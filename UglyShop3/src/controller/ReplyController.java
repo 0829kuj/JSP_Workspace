@@ -3,7 +3,6 @@ package controller;
 import java.io.IOException;
 
 import javax.annotation.Resource;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,14 +11,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
 import beans.Reply;
-import dao.ReplyDAO;
+import dao.ReplyDao;
 
 
 @WebServlet("/replyController")
 public class ReplyController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-	private ReplyDAO replyDao;
+	private ReplyDao replyDao;
 	
 	@Resource(name = "jdbc/shop")
 	private DataSource datasource;
@@ -27,7 +26,7 @@ public class ReplyController extends HttpServlet {
     @Override
 	public void init() throws ServletException {
 		// 서블릿 컨테이터가 서블릿 객체를 생성한 후 맨 처음 딱 한번만 호출되는 메서드. ReplyDao의 datasource를 가져와 replyDao객체에 저장하여 사용
-		replyDao = new ReplyDAO(datasource);
+		replyDao = new ReplyDao(datasource);
 	}
 
 
@@ -38,22 +37,27 @@ public class ReplyController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		request.setCharacterEncoding("UTF-8");
-		String action = request.getParameter("cmd");
+		// CRUD테스트용
+//		Reply reply1 = new Reply("farmer03","리뷰내용가나다라마바사아자차",789);
+//		replyDao.save(reply1);		// 입력 테스트용
 		
-		if(action == null) {
-			action = "find";
-		}
+//		System.out.println(replyDao.find(2));		// 찾기 테스트용
+
+//		System.out.println(replyDao.delete(3));		// 삭제테스트용. true가 나와야하는데...
+		
+		
+		request.setCharacterEncoding("UTF-8");
+		String action = request.getParameter("cmd") != null ? request.getParameter("cmd") : "find";
 		
 		try {
 			switch (action) {
-			case "find":	// 덧글 찾기
+			case "find":
 				find(request, response);
 				break;
-//			case "edit":	// 덧글 수정 (주소창에 내용이 떠서 수정함)
-//				edit(request, response);
-//				break;
-			case "delete":	// 덧글 삭제
+			case "edit":
+				edit(request, response);
+				break;
+			case "delete":
 				delete(request, response);
 				break;
 			default:
@@ -79,30 +83,8 @@ public class ReplyController extends HttpServlet {
 		}
 	}
 
-	private void delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// 덧글삭제버튼을 눌렀을때 덧글삭제메서드가 실행되도록
-		int id = Integer.parseInt(request.getParameter("replyID"));	// replyID를 가져옴
-		int review = Integer.parseInt(request.getParameter("id"));
-		
-		boolean isDeleted = replyDao.delete(id);
-		if(isDeleted) {
-//			response.sendRedirect("reviewController");	 // 테스트용 페이지 단순이동(정보 안갖고 이동)
-
-			RequestDispatcher rd = request.getRequestDispatcher("reviewController?cmd=view&id=" + review);	// forward해주기 위해 RequestDispatcher로 리퀘스트를 유지함
-			rd.forward(request, response);
-			
-			System.out.println("삭제왼료@@");
-		}
-	}
-
-	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private void edit(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		// 덧글작성버튼을 눌렀을때 덧글작성메서드가 실행되도록
-		request.setCharacterEncoding("UTF-8");
-		response.setContentType("text/html;charset=UTF-8");
-		
-		int review = Integer.parseInt(request.getParameter("id"));
-		
 		Reply reply = new Reply();
 
 //		reply.setReplyID(Integer.parseInt(request.getParameter("replyID")));	// replyID는 직접 입력받는 값이 아님
@@ -116,10 +98,31 @@ public class ReplyController extends HttpServlet {
 //			RequestDispatcher rd = request.getRequestDispatcher("reviewController?cmd=view&reviewID="+ reply.getReviewID());
 //			rd.forward(request, response);
 			
-			RequestDispatcher rd = request.getRequestDispatcher("reviewController?cmd=view&id=" + review);	// forward해주기 위해 RequestDispatcher로 리퀘스트를 유지함
-			rd.forward(request, response);
+			// 일단 리뷰리스트로 가도록 테스트한 후 받아온 정보의 reviewID를 사용해 리뷰디테일페이지로 바로 접속할수있는지 테스트
+			response.sendRedirect("reviewController");
 			System.out.println("입력완료@@");
 		}
+
+	}
+
+
+	private void delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// 덧글삭제버튼을 눌렀을때 덧글삭제메서드가 실행되도록
+		int id = Integer.parseInt(request.getParameter("replyID")); 
+		
+		boolean delete = replyDao.delete(id);
+		
+		if(delete) {
+			response.sendRedirect("reviewController?cmd=list");
+		}else {
+			System.out.println("삭제실패");
+		}
+	}
+
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		doGet(request, response);
 	}
 
 }

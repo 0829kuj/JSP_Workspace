@@ -9,22 +9,22 @@ import javax.sql.DataSource;
 
 import beans.Reply;
 // 실제 CRUD기능을 하는 클래스
-public class ReplyDao {
+public class ReplyDAO {
 	private DataSource datasource;
 	private Connection conn;
 	private PreparedStatement pstmt;
 	private ResultSet rs;
 	
-    public  ReplyDao(DataSource datasource) {
-        this.datasource = datasource;
-        // 객체 생성시 커넥션 풀 datasource를 입력
-    }
-    
-    // 클릭한 reviewID에 해당하는 하나의 덧글을 리턴 => 우선 테스트삼아 replyID로 찾게 만들었으니 나중에 sql문 수정할것
-    public Reply find(int id) {
-    	Reply reply = null;
-    	
-    	try {
+ public  ReplyDAO(DataSource datasource) {
+     this.datasource = datasource;
+     // 객체 생성시 커넥션 풀 datasource를 입력
+ }
+ 
+//클릭한 reviewID에 해당하는 하나의 덧글을 리턴 => 우선 테스트삼아 replyID로 찾게 만들었으니 나중에 sql문 수정할것
+public Reply find(int id) {
+	Reply reply = null;
+	
+	try {
 			conn = datasource.getConnection();
 			pstmt = conn.prepareStatement("select * from reply where reviewID=?");
 			pstmt.setInt(1, id);
@@ -49,17 +49,18 @@ public class ReplyDao {
 			closeAll();
 		}
 		return reply;	
-    }
-    
-    public boolean save(Reply reply) {
-    	boolean rowsaved = false;
-    	
-    	try {
+}
+
+public boolean save(Reply reply) {
+	boolean rowsaved = false;
+	
+	try {
 			conn = datasource.getConnection();
-	    	pstmt = conn.prepareStatement("insert into reply(farmID,replyContent,reviewID) values (?,?,?)");
+	    	pstmt = conn.prepareStatement("insert into reply(farmID,prodID,replyContent,reviewID) values (?,?,?,?)");
 	    	pstmt.setString(1, reply.getFarmID());
-	    	pstmt.setString(2, reply.getReplyContent());
-	    	pstmt.setInt(3, reply.getReviewID());
+	    	pstmt.setInt(2, reply.getProdID());
+	    	pstmt.setString(3, reply.getReplyContent());
+	    	pstmt.setInt(4, reply.getReviewID());
 	    	rowsaved = pstmt.executeUpdate() > 0;	// 저장된 행이 1이상이면 true
 	    	
 	    	System.out.println("덧글 작성 성공");
@@ -71,12 +72,12 @@ public class ReplyDao {
 			closeAll();
 		}
 		return rowsaved;
-    }
-    
-    
-    public boolean delete(int id) {
-    	Boolean deleteId = false;
-    	try {
+}
+
+
+public boolean delete(int id) {
+	Boolean deleteId = false;
+	try {
 			conn = datasource.getConnection();
 			pstmt = conn.prepareStatement("delete from reply where replyID=?");
 			pstmt.setInt(1, id);
@@ -90,9 +91,9 @@ public class ReplyDao {
 			closeAll();
 		}
 		return deleteId;
-    }
-    
-    public void closeAll() {
+}
+
+public void closeAll() {
 		try {
 			if(rs != null) rs.close();
 		    if(pstmt != null) pstmt.close();
@@ -102,6 +103,9 @@ public class ReplyDao {
 			e.printStackTrace();
 			System.out.println("DB연결 닫는작업에서 에러발생!");
 		}
-    }
-    
 }
+
+}
+
+
+

@@ -45,13 +45,10 @@
 		HashMap<Integer, Cart> cartList = (HashMap<Integer, Cart>) session.getAttribute("cartList");
 	}
 	%>
-	
-	
-
 
 	<div class="row mt-5">
 		<div class="col-md-8 mx-auto">
-		 <form action="<%=request.getContextPath()%>/order" method="post">
+		 <form action="<%=request.getContextPath()%>/order?cmd=save" method="get" id="next_form" >
 		 	<input type="hidden" name="cmd" value="save">
 			<div class="font-weight-bold mt-3 shadow p-3 mb-4 bg-light rounded">
 				주문하기</div>
@@ -60,7 +57,6 @@
 				<thead>
 					<tr>
 						<th scope="col">상품명</th>
-						<!-- <th scope="col">판매자</th> -->
 						<th scope="col">수량</th>
 						<th scope="col">금액</th>
 					</tr>
@@ -98,19 +94,15 @@
 					style="margin-left: -25px;" size="5" placeholder="비밀번호" required />
 			</div>
 			<span style="float: right;">
-			<input id="submit" type="submit" class="btn btn-dark form-control mb-3 mt-3" value="결제하기" />
+
+				<input type="submit" id="next" class="btn btn-dark form-control mb-3 mt-3" value="결제하기" />
 			</span>
 			</form>
 		</div>
 	</div>
-	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"></script>
+	<jsp:include page="../includes/footer.jsp" />
 	<script
 		src="https://cdn.datatables.net/v/bs4/dt-1.10.24/datatables.min.js"></script>
-	<script src="../assets/order.js"></script>
-	<jsp:include page="../includes/footer.jsp" />
+	
 </body>
 </html>

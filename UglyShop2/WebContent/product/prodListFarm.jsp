@@ -77,3 +77,4 @@
   $('.nav-link').removeClass('active'); // 모든 메뉴의 액티브클래스를 삭제
   $('#m-proListFar').addClass('active'); // 네브바에서 메뉴중 m-home에 active 클래스를 주는 스크립트
 </script>
+

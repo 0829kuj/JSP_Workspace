@@ -8,6 +8,7 @@ public class Reply {
 	private int prodID;
 	
 	public Reply() {
+		// TODO Auto-generated constructor stub
 	}
 	
 	public Reply(String farmID, String replyContant, int reviewID) {
@@ -19,14 +20,6 @@ public class Reply {
 	}
 
 	
-
-	public int getProdID() {
-		return prodID;
-	}
-
-	public void setProdID(int prodID) {
-		this.prodID = prodID;
-	}
 
 	public int getReplyID() {
 		return replyID;
@@ -63,6 +56,14 @@ public class Reply {
 	@Override
 	public String toString() {
 		return "Reply [ replyID=" + replyID + ", farmID=" + farmID + ", replyContant=" + replyContent + ", reviewID=" + reviewID + " ]";
+	}
+
+	public int getProdID() {
+		return prodID;
+	}
+
+	public void setProdID(int prodID) {
+		this.prodID = prodID;
 	}
 	
 }

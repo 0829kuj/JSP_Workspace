@@ -3,17 +3,16 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <jsp:include page="../includes/headerUser.jsp" />
 
+
 <style>
 .container {
 	/* background-color: lightgray; */
 	display: flex;
 }
-
 .container2 {
   padding: 20px;
 	margin-left: 40px;
 }
-
 .container3 {
 	/* flex-direction: column; */
 	margin-top: 60px;
@@ -45,12 +44,13 @@ h3 {
 			<p id="pID" style="display: none">
 				<c:out value="${product.prodID}" />
 			</p>
+			<p>
 				판매자ID:
-				<c:out value="${product.farmID}" /><p>
+				<c:out value="${product.farmID}" />
 			</p>
 			<p id="fID" style="display: none">
 				<c:out value="${product.farmID}" />
-			</p>
+			</p> 
 			<p>
 				가격:
 				<c:out value="${product.prodPrice}" />
@@ -90,15 +90,13 @@ h3 {
 
 	$('#cart').click(function() {
 		const id = document.querySelector('#pID').textContent;
-		const id2 = document.querySelector('#fID').textContent;
+		const id2 = document.querySelector('#fID').textContent; 
 		const url = "cart?id=" + id + "&farmID=" + id2;
 		$.get(url, function(res) {
 			console.log(res);
 			alert("장바구니에 상품이 추가되었습니다");
 		});
 	})
-	
-
 </script>
 
 

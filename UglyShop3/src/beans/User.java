@@ -1,12 +1,19 @@
 package beans;
 
-
 public class User {
 	private String userID;
 	private String userPassword;
 	private String userName;
 	private String userAdd;
 	private String userTel;
+	
+	public User(String userID, String userPassword, String userName, String userAdd, String userTel) {
+		this.userID = userID;
+		this.userPassword = userPassword;
+		this.userName = userName;
+		this.userAdd = userAdd;
+		this.userTel = userTel;
+	}
 	
 	public String getUserID() {
 		return userID;
@@ -38,7 +45,6 @@ public class User {
 	public void setUserTel(String userTel) {
 		this.userTel = userTel;
 	}
-	
 	
 	
 }

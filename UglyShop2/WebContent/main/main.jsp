@@ -2,13 +2,11 @@
 <jsp:include page="/includes/headerUser.jsp" />
 <style>
   .container2 {
-    background-color: bisque;
+    /* background-color: bisque; */
     display: flex;
   }
-
   img {
     width: 400px;
-    /* height: 350px; */
   }
   .container3 {
     margin-left: 10px;
@@ -19,10 +17,10 @@
   }
 </style>
 
-<div class="container">
+<div class="container mt-4">
 <h2>못난이 농산품</h2>
 <div class="container2">
-  <img src="https://images.unsplash.com/photo-1551649001-7a2482d98d05?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80" alt="농민사진" />
+  <img src="https://images.unsplash.com/photo-1551649001-7a2482d98d05?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80" style = "height: 300px;" alt="농민사진" />
   <div class="container3">
     <h3 class="slogan">기획의도</h3>
     <p>

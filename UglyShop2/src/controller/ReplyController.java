@@ -12,14 +12,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
 import beans.Reply;
-import dao.ReplyDao;
+import dao.ReplyDAO;
 
 
 @WebServlet("/replyController")
 public class ReplyController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-	private ReplyDao replyDao;
+	private ReplyDAO replyDao;
 	
 	@Resource(name = "jdbc/shop")
 	private DataSource datasource;
@@ -27,7 +27,7 @@ public class ReplyController extends HttpServlet {
     @Override
 	public void init() throws ServletException {
 		// 서블릿 컨테이터가 서블릿 객체를 생성한 후 맨 처음 딱 한번만 호출되는 메서드. ReplyDao의 datasource를 가져와 replyDao객체에 저장하여 사용
-		replyDao = new ReplyDao(datasource);
+		replyDao = new ReplyDAO(datasource);
 	}
 
 
@@ -36,7 +36,9 @@ public class ReplyController extends HttpServlet {
     }
 
 
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
 
 		request.setCharacterEncoding("UTF-8");
 		String action = request.getParameter("cmd");
@@ -50,9 +52,6 @@ public class ReplyController extends HttpServlet {
 			case "find":	// 덧글 찾기
 				find(request, response);
 				break;
-//			case "edit":	// 덧글 수정 (주소창에 내용이 떠서 수정함)
-//				edit(request, response);
-//				break;
 			case "delete":	// 덧글 삭제
 				delete(request, response);
 				break;
@@ -86,7 +85,6 @@ public class ReplyController extends HttpServlet {
 		
 		boolean isDeleted = replyDao.delete(id);
 		if(isDeleted) {
-//			response.sendRedirect("reviewController");	 // 테스트용 페이지 단순이동(정보 안갖고 이동)
 
 			RequestDispatcher rd = request.getRequestDispatcher("reviewController?cmd=view&id=" + review);	// forward해주기 위해 RequestDispatcher로 리퀘스트를 유지함
 			rd.forward(request, response);
@@ -113,13 +111,10 @@ public class ReplyController extends HttpServlet {
 		boolean isSaved = replyDao.save(reply);	// true이면 저장성공, false이면 실패
 		
 		if(isSaved) {
-//			RequestDispatcher rd = request.getRequestDispatcher("reviewController?cmd=view&reviewID="+ reply.getReviewID());
-//			rd.forward(request, response);
-			
 			RequestDispatcher rd = request.getRequestDispatcher("reviewController?cmd=view&id=" + review);	// forward해주기 위해 RequestDispatcher로 리퀘스트를 유지함
 			rd.forward(request, response);
 			System.out.println("입력완료@@");
 		}
 	}
-
 }
+
